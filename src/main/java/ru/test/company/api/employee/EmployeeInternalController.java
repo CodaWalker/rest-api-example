@@ -34,7 +34,6 @@ public class EmployeeInternalController {
         this.employeeMapper = employeeMapper;
     }
 
-
     @ApiOperation("Получить список сотрудников")
     @GetMapping(value = "/all")
     public List<EmployeeDto> getAll() {
@@ -49,7 +48,7 @@ public class EmployeeInternalController {
                 EmployeeCreateArgument.builder().firstName(dto.getFirstName())
                         .lastName(dto.getLastName())
                         .firstWorkingDate(LocalDateTime.now())
-                        .department_id(departmentService.getByName(dto.getDepartment_name()).getId()).build()));
+                        .department_id(departmentService.getByName(dto.getDepartment_name())).build()));
     }
 //
 //    @ApiOperation("Получить заявку по идентификатору")

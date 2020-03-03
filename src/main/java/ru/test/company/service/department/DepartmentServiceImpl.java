@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getByName(String department_name) {
-        return departmentRepository.getDepartmentByName(department_name);
+    public UUID getByName(String department_name) {
+        return departmentRepository.getDepartmentByName(department_name).getId();
     }
 }
