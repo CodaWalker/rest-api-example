@@ -1,0 +1,45 @@
+package ru.test.company.api.department;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+import ru.test.company.api.department.dto.in.DepartmentCreateDto;
+import ru.test.company.api.department.dto.out.DepartmentDto;
+import ru.test.company.api.department.mapper.DepartmentMapper;
+import ru.test.company.model.department.Department;
+import ru.test.company.service.department.DepartmentService;
+import ru.test.company.service.department.argument.DepartmentCreateArgument;
+
+import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+
+@RestController
+@RequestMapping(value = "api/department")
+@Api("Внутренний контроллер отдела")
+public class DepartmentInternalController {
+    private final DepartmentService departmentService;
+    private final DepartmentMapper departmentMapper;
+
+    public DepartmentInternalController(DepartmentService departmentService, DepartmentMapper departmentMapper) {
+        this.departmentService = departmentService;
+        this.departmentMapper = departmentMapper;
+    }
+
+    @ApiOperation("Получить список отделов")
+    @GetMapping(value = "/all")
+    public List<DepartmentDto> getAll() {
+        return departmentMapper.toDtoListFromDB(departmentService.getAll());
+    }
+
+    @ApiOperation("Создать отдел")
+    @PostMapping(value = "/create")
+    @ResponseStatus(CREATED)
+    public DepartmentDto create(@RequestBody DepartmentCreateDto dto) {
+        return departmentMapper.toDto(
+                departmentService.createDepartment(DepartmentCreateArgument.builder()
+                        .name(dto.getName())
+                        .build())
+        );
+    }
+}
