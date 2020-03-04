@@ -16,6 +16,6 @@ public interface DepartmentService {
     void removeDepartment(UUID departmentId);
     Department getExisting(UUID departmentId);
     List<Department> getAll();
-
-    UUID getByName(String department_name);
+    Department createNoDepartment();
+    Department getByName(String department_name);
 }

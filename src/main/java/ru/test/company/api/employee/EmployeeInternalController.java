@@ -5,8 +5,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
+import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.employee.mapper.EmployeeMapper;
+import ru.test.company.error.api.ApiExceptionHandler;
+import ru.test.company.model.department.Department;
+import ru.test.company.model.employee.Employee;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
@@ -14,6 +18,7 @@ import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -21,7 +26,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping(value = "api/employee")
 @Api("Внутренний контроллер сотрудников")
 
-public class EmployeeInternalController {
+public class EmployeeInternalController{
 
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
@@ -44,11 +49,21 @@ public class EmployeeInternalController {
     @PostMapping(value = "/create")
     @ResponseStatus(CREATED)
     public EmployeeDto create(@RequestBody EmployeeCreateDto dto) {
-        return employeeMapper.toDto(employeeService.createEmployee(
-                EmployeeCreateArgument.builder().firstName(dto.getFirstName())
-                        .lastName(dto.getLastName())
-                        .firstWorkingDate(LocalDateTime.now())
-                        .department_id(departmentService.getByName(dto.getDepartment_name())).build()));
+            Department department = departmentService.getByName(dto.getDepartment_name());
+            if(department == null){
+                department = departmentService.getByName("NoDepartment");
+            }
+            return employeeMapper.toDto(employeeService.createEmployee(
+                    EmployeeCreateArgument.builder().firstName(dto.getFirstName())
+                            .lastName(dto.getLastName())
+                            .firstWorkingDate(LocalDateTime.now())
+                            .department_id(department.getId()).build()));
+    }
+
+    @ApiOperation("Уволить сотрудника")
+    @PutMapping("/dismiss/{id}")
+    public EmployeeDto dismiss(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.dismissEmployee(id));
     }
 //
 //    @ApiOperation("Получить заявку по идентификатору")

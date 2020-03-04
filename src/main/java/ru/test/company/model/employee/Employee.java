@@ -7,6 +7,7 @@ import ru.test.company.model.department.Department;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,6 +17,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "EMPLOYEES")
 public class Employee extends BaseEntity {
+
+    public void setID(UUID uuid) {
+        super.setId(uuid);
+    }
 
     /** Имя */
     @Column(name = "FIRST_NAME")

@@ -1,14 +1,22 @@
 package ru.test.company.service.department;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.test.company.api.department.dto.in.DepartmentCreateDto;
+import ru.test.company.api.department.dto.out.DepartmentDto;
 import ru.test.company.model.department.Department;
 import ru.test.company.repository.department.DepartmentRepository;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.department.argument.DepartmentUpdateArgument;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -52,7 +60,29 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public UUID getByName(String department_name) {
-        return departmentRepository.getDepartmentByName(department_name).getId();
+    public Department getByName(String department_name) {
+        return departmentRepository.getDepartmentByName(department_name);
+    }
+
+    @Override
+    public Department createNoDepartment() {
+        System.out.println("Проведена инциализация initDepartment");
+        DepartmentCreateDto dto;
+        Department department = getByName("NoDepartment");
+        if(department == null){
+            dto = new DepartmentCreateDto("NoDepartment");
+            return
+                    createDepartment(DepartmentCreateArgument.builder()
+                            .name(dto.getName())
+                            .build()
+            );
+        }
+
+        return department;
+    }
+
+    @PostConstruct
+    void initDepartment(){
+        createNoDepartment();
     }
 }

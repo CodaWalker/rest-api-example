@@ -2,7 +2,9 @@ package ru.test.company.service.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
@@ -11,6 +13,7 @@ import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,5 +66,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAll() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Employee dismissEmployee(UUID id) {
+        Employee employeeFromDB = getExisting(id);
+        if(employeeFromDB.getEvent().equals(Event.DISMISS)){
+            System.out.println("Этот сотрудник уволен ранее");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .lastWorkingDate(LocalDateTime.now())
+                    .department(employeeFromDB.getDepartment())
+                    .event(Event.DISMISS)
+                    .build();
+            employee.setID(id);
+            return employeeRepository.save(employee);
+        }
+            return employeeFromDB;
     }
 }

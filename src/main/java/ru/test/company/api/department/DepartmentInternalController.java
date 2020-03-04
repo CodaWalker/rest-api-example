@@ -10,7 +10,9 @@ import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -36,10 +38,15 @@ public class DepartmentInternalController {
     @PostMapping(value = "/create")
     @ResponseStatus(CREATED)
     public DepartmentDto create(@RequestBody DepartmentCreateDto dto) {
-        return departmentMapper.toDto(
-                departmentService.createDepartment(DepartmentCreateArgument.builder()
-                        .name(dto.getName())
-                        .build())
-        );
+        Department department = departmentService.getByName(dto.getName());
+        if(department == null){
+            return departmentMapper.toDto(
+                    departmentService.createDepartment(DepartmentCreateArgument.builder()
+                            .name(dto.getName())
+                            .build())
+            );
+        }
+        else return departmentMapper.toDto(department);
     }
+
 }
