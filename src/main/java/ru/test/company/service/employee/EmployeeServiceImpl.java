@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(EmployeeUpdateArgument employeeUpdateArgument) {
+    public Employee updateEmployee(UUID uuid, EmployeeUpdateArgument employeeUpdateArgument) {
         Employee employee = Employee.builder()
                 .firstName(employeeUpdateArgument.getFirstName())
                 .lastName(employeeUpdateArgument.getLastName())
@@ -55,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .department(departmentService.getExisting(employeeUpdateArgument.getDepartment_id()))
                 .event(employeeUpdateArgument.getEvent())
                 .build();
+        employee.setID(uuid);
         return employeeRepository.save(employee);
     }
 
@@ -102,4 +103,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return employeeFromDB;
     }
+
+
 }

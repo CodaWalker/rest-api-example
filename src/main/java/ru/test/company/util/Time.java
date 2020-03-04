@@ -1,4 +1,4 @@
-package ru.test.company.util.validator;
+package ru.test.company.util;
 
 import java.time.LocalDateTime;
 

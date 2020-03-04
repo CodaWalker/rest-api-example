@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface EmployeeService {
     Employee createEmployee(EmployeeCreateArgument employeeCreateArgument);
     Employee getExisting(UUID employeeId);
-    Employee updateEmployee(EmployeeUpdateArgument employeeUpdateArgument);
+    Employee updateEmployee(UUID uuid, EmployeeUpdateArgument employeeUpdateArgument);
     void removeEmployee(UUID employeeId);
 
     List<Employee> getAll();

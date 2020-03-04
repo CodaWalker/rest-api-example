@@ -14,6 +14,7 @@ import ru.test.company.model.employee.Employee;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
+import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -77,37 +78,16 @@ public class EmployeeInternalController{
     public EmployeeDto get(@PathVariable UUID id) {
         return employeeMapper.toDto(employeeService.getExisting(id));
     }
-//
-//    @ApiOperation("Удалить заявку по идентификатору")
-//    @DeleteMapping("/{id}")
-//    public void delete(@PathVariable UUID id) {
-//         ticketService.deleteTicket(id); //Add DTO
-//    }
-//
-//    @ApiOperation("Подтвердить заявку")
-//    @PutMapping("/{id}/accepted")
-//    public TicketDto accepted(@PathVariable UUID id) {
-//        return ticketMapper.toDto(ticketService.accepted(id)); //DTO ???
-//    }
-//
-//    @ApiOperation("Обновить заявку")
-//    @PutMapping("/{id}/update")
-//    public TicketDto update(@PathVariable UUID id,
-//                            @RequestBody TicketUpdateDto updateDto) {
-//        return ticketMapper.toDto(ticketService.update(id, TicketUpdateArgument.builder()
-//                                                                             .userId(updateDto.getUserId())
-//                                                                              .comment(updateDto.getComment())
-//                                                                                .sender_id(updateDto.getSender_id())
-//                                                                                .recipient_id(updateDto.getRecipient_id())
-//                                                                                .manager_id(updateDto.getManager_id())
-//                                                                                .operator_id(updateDto.getOperator_id())
-//                                                                                .accepted(updateDto.getAccepted())
-//                                                                              .fromAds(updateDto.getFromAds())
-//                                                                              .description(updateDto.getDescription())
-//                                                                              .title(updateDto.getTitle())
-//                                                                              .status(updateDto.getStatus())
-//                                                                              .build()));
-//    }
-//
 
+    @ApiOperation("Обновить сотрудника")
+    @PutMapping("/update/{id}")
+    public EmployeeDto update(@PathVariable UUID id,
+                            @RequestBody EmployeeUpdateDto updateDto) {
+         return employeeMapper.toDto(employeeService.updateEmployee(id, EmployeeUpdateArgument.builder()
+                                        .firstName(updateDto.getFirstName())
+                                        .lastName(updateDto.getLastName())
+                                        .department_id(UUID.fromString(updateDto.getDepartment_name()))
+                                        .event(updateDto.getEvent())
+                                        .build()));
+    }
 }
