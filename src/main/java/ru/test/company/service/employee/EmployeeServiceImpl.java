@@ -87,4 +87,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
             return employeeFromDB;
     }
+
+    @Override
+    public Employee deleteEmployee(UUID id) {
+        Employee employeeFromDB = getExisting(id);
+        if(employeeFromDB == null){
+            System.out.println("Не найден сотрудник!");
+            return null;
+        }
+        if(!employeeFromDB.getEvent().equals(Event.DISMISS)){
+            System.out.println("Этот сотрудник не уволен, сначала увольте его!");
+        }else {
+            employeeRepository.delete(employeeFromDB);
+        }
+        return employeeFromDB;
+    }
 }

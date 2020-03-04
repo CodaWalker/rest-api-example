@@ -18,4 +18,6 @@ public interface EmployeeService {
     List<Employee> getAll();
 
     Employee dismissEmployee(UUID id);
+
+    Employee deleteEmployee(UUID id);
 }

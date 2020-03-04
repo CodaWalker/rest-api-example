@@ -10,9 +10,7 @@ import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -48,5 +46,4 @@ public class DepartmentInternalController {
         }
         else return departmentMapper.toDto(department);
     }
-
 }

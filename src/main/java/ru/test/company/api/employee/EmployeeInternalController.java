@@ -65,12 +65,18 @@ public class EmployeeInternalController{
     public EmployeeDto dismiss(@PathVariable UUID id) {
         return employeeMapper.toDto(employeeService.dismissEmployee(id));
     }
-//
-//    @ApiOperation("Получить заявку по идентификатору")
-//    @GetMapping("/{id}")
-//    public TicketDto get(@PathVariable UUID id) {
-//        return ticketMapper.toDto(ticketService.getExisting(id));
-//    }
+
+    @ApiOperation("Удалить сотрудника")
+    @PutMapping("/delete/{id}")
+    public EmployeeDto delete(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.deleteEmployee(id));
+    }
+
+    @ApiOperation("Получить сотрудника по идентификатору")
+    @GetMapping("/{id}")
+    public EmployeeDto get(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.getExisting(id));
+    }
 //
 //    @ApiOperation("Удалить заявку по идентификатору")
 //    @DeleteMapping("/{id}")
