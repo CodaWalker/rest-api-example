@@ -29,7 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
-/src/main/java/ru/test/company/api/department/dto/out/DepartmentDto.java
 /.mvn/wrapper/
 /mvnw
 /mvnw.cmd
