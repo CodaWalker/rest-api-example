@@ -8,9 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.test.company.model.employee.Event;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 /** ДТО создания сотрудника */
 @Getter
 @Setter
@@ -28,6 +25,4 @@ public class EmployeeCreateDto {
     @ApiModelProperty("Название отдела")
     private String department_name;
 
-    @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
-    private Event event;
 }

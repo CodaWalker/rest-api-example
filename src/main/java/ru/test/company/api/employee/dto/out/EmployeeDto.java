@@ -37,9 +37,9 @@ public class EmployeeDto {
     @ApiModelProperty("Название отдела")
     private String department_name;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ApiModelProperty("ИД отдела сотрудника")
     private UUID department_id;
-
 
     @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
     private Event event;

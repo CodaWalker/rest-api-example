@@ -11,6 +11,7 @@ import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -46,4 +47,11 @@ public class DepartmentInternalController {
         }
         else return departmentMapper.toDto(department);
     }
+
+    @ApiOperation("Получить количество всех дней")
+    @GetMapping("/report/get-all-days/{id}")
+    public Long getAllDays(@PathVariable UUID id) {
+        return departmentService.getCountDaysInCompany(id);
+    }
+
 }

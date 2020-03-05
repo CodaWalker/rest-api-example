@@ -54,6 +54,7 @@ public class Employee extends BaseEntity {
     /** Инфиализация */
     @PrePersist
     private void setInitialValues() {
-       // firstWorkingDate = LocalDateTime.now();
+        event = Event.PRESENCE_AT_WORK;
+        firstWorkingDate = LocalDateTime.now();
     }
 }

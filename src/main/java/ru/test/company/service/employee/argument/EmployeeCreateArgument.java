@@ -24,7 +24,6 @@ public class EmployeeCreateArgument {
         this.lastName = lastName;
         this.firstWorkingDate = firstWorkingDate;
         this.department_id = department_id;
-
     }
 
     private String firstName;

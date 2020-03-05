@@ -1,22 +1,18 @@
 package ru.test.company.service.department;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.test.company.api.department.dto.in.DepartmentCreateDto;
-import ru.test.company.api.department.dto.out.DepartmentDto;
 import ru.test.company.model.department.Department;
 import ru.test.company.repository.department.DepartmentRepository;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.department.argument.DepartmentUpdateArgument;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
-
-import static org.springframework.http.HttpStatus.CREATED;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -79,6 +75,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
 
         return department;
+    }
+
+    @Override
+    public Long getCountDaysInCompany(UUID uuid) {
+        Department department = getExisting(uuid);
+        LocalDateTime localDateTime2 = department.getFirstWorkingDate();
+        if(department.getLastWorkingDate() != null){
+            return localDateTime2.until(department.getLastWorkingDate(), ChronoUnit.DAYS);
+        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
     }
 
     @PostConstruct

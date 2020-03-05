@@ -14,6 +14,7 @@ import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,9 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = Employee.builder()
                 .firstName(employeeCreateArgument.getFirstName())
                 .lastName(employeeCreateArgument.getLastName())
-                .firstWorkingDate(employeeCreateArgument.getFirstWorkingDate())
                 .department(departmentService.getExisting(employeeCreateArgument.getDepartment_id()))
-                .event(Event.PRESENCE_AT_WORK)
                 .build();
         return employeeRepository.save(employee);
     }
@@ -79,6 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = Employee.builder()
                     .firstName(employeeFromDB.getFirstName())
                     .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
                     .lastWorkingDate(LocalDateTime.now())
                     .department(employeeFromDB.getDepartment())
                     .event(Event.DISMISS)
@@ -100,6 +100,84 @@ public class EmployeeServiceImpl implements EmployeeService {
             System.out.println("Этот сотрудник не уволен, сначала увольте его!");
         }else {
             employeeRepository.delete(employeeFromDB);
+        }
+        return employeeFromDB;
+    }
+
+    @Override
+    public Long getCountDaysInCompany(UUID uuid) {
+        Employee employee = getExisting(uuid);
+        LocalDateTime localDateTime2 = employee.getFirstWorkingDate();
+        if(employee.getEvent().equals(Event.DISMISS) && employee.getLastWorkingDate() != null){
+            return localDateTime2.until(employee.getLastWorkingDate(), ChronoUnit.DAYS);
+        }
+        LocalDateTime localDateTime = LocalDateTime.now();
+        return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
+    }
+
+    @Override
+    public Long getCountWorkDaysInCompany(UUID uuid) {
+        Employee employee = getExisting(uuid);
+
+        return null;
+    }
+
+    @Override
+    public Employee setAbsentedHolidayEmployee(UUID uuid) {
+        Employee employeeFromDB = getExisting(uuid);
+        if(employeeFromDB.getEvent().equals(Event.DISMISS)){
+            System.out.println("Этот сотрудник уволен ранее");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
+                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
+                    .department(employeeFromDB.getDepartment())
+                    .event(employeeFromDB.getEvent())
+                    .build();
+            employee.setID(uuid);
+            return employeeRepository.save(employee);
+        }
+        return employeeFromDB;
+    }
+
+    @Override
+    public Employee setAbsentedMedicalEmployee(UUID uuid) {
+        Employee employeeFromDB = getExisting(uuid);
+        if(employeeFromDB.getEvent().equals(Event.ABSENTED_MEDICAL)){
+            System.out.println("Этот сотрудник уже отмечен");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
+                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
+                    .department(employeeFromDB.getDepartment())
+                    .event(Event.ABSENTED_MEDICAL)
+                    .build();
+            employee.setID(uuid);
+            return employeeRepository.save(employee);
+        }
+        return employeeFromDB;
+    }
+
+    @Override
+    public Employee setAbsentedOtherEmployee(UUID uuid) {
+        Employee employeeFromDB = getExisting(uuid);
+        if(employeeFromDB.getEvent().equals(Event.ABSENTED_OTHER)){
+            System.out.println("Этот сотрудник уже отмечен");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
+                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
+                    .department(employeeFromDB.getDepartment())
+                    .event(Event.ABSENTED_OTHER)
+                    .build();
+            employee.setID(uuid);
+            return employeeRepository.save(employee);
         }
         return employeeFromDB;
     }

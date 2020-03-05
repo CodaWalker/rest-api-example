@@ -76,6 +76,18 @@ public class EmployeeInternalController{
         return employeeMapper.toDto(employeeService.getExisting(id));
     }
 
+    @ApiOperation("Получить количество всех дней")
+    @GetMapping("/report/get-all-days/{id}")
+    public Long getAllDays(@PathVariable UUID id) {
+        return employeeService.getCountDaysInCompany(id);
+    }
+
+    @ApiOperation("Получить количество рабочих дней")
+    @GetMapping("/report/get-work-days/{id}")
+    public Long getWorkDays(@PathVariable UUID id) {
+        return employeeService.getCountWorkDaysInCompany(id);
+    }
+
     @ApiOperation("Обновить сотрудника")
     @PutMapping("/update/{id}")
     public EmployeeDto update(@PathVariable UUID id,
@@ -87,4 +99,23 @@ public class EmployeeInternalController{
                                         .event(updateDto.getEvent())
                                         .build()));
     }
+
+    @ApiOperation("Отметить отпуск для сотрудника на текущий день")
+    @PutMapping("/set-absented-holiday/{id}")
+    public EmployeeDto setAbsentedHolidayIsDay(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.setAbsentedHolidayEmployee(id));
+    }
+
+    @ApiOperation("Отметить больничный для сотрудника на текущий день")
+    @PutMapping("/set-absented-medical/{id}")
+    public EmployeeDto setAbsentedMedicalIsDay(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.setAbsentedMedicalEmployee(id));
+    }
+
+    @ApiOperation("Отметить прогул для сотрудника на текущий день")
+    @PutMapping("/set-absented-other/{id}")
+    public EmployeeDto setAbsentedOtherIsDay(@PathVariable UUID id) {
+        return employeeMapper.toDto(employeeService.setAbsentedOtherEmployee(id));
+    }
+
 }

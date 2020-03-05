@@ -18,4 +18,6 @@ public interface DepartmentService {
     List<Department> getAll();
     Department createNoDepartment();
     Department getByName(String department_name);
+
+    Long getCountDaysInCompany(UUID id);
 }
