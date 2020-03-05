@@ -8,15 +8,12 @@ import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.employee.mapper.EmployeeMapper;
-import ru.test.company.error.api.ApiExceptionHandler;
 import ru.test.company.model.department.Department;
-import ru.test.company.model.employee.Employee;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
