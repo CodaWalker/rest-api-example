@@ -9,7 +9,7 @@ import ru.test.company.model.employee.Event;
 
 import java.time.LocalDateTime;
 
-/** ДТО обновления отдела */
+/** ДТО отдела */
 @Getter
 @Setter
 @Builder

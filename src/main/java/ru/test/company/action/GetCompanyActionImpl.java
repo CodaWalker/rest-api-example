@@ -27,9 +27,11 @@ public class GetCompanyActionImpl implements GetCompanyAction{
         this.calendarService = calendarService;
     }
 
-
     @Override
     public Calendar createCalendar(CalendarCreateArgument calendarCreateArgument, Event event) throws ErrorCustom {
+                if(!event.equals(Event.PRESENCE_AT_WORK)) {
+                    employeeService.setPresenceAtWorkEmployee(calendarCreateArgument.getEmployeeId());
+                }
         Employee employee = employeeService.getExisting(calendarCreateArgument.getEmployeeId());
 
         if(employee.getLastWorkingDate() != null){
@@ -43,32 +45,10 @@ public class GetCompanyActionImpl implements GetCompanyAction{
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(finishIntervalDate)
                 .build();
-
         calendarService.createCalendar(calendar);
 
         return calendar;
 
-    }
-
-    @Override
-    public Calendar setAbsentedHolidayEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return  createCalendar(calendarCreateArgument,Event.ABSENTED_HOLIDAY);
-    }
-
-    @Override
-    public Calendar setPresenceAtWorkEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        employeeService.setPresenceAtWorkEmployee(calendarCreateArgument.getEmployeeId());
-        return  createCalendar(calendarCreateArgument,Event.PRESENCE_AT_WORK);
-    }
-
-    @Override
-    public Calendar setAbsentedMedicalEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return createCalendar(calendarCreateArgument,Event.ABSENTED_MEDICAL);
-    }
-
-    @Override
-    public Calendar setAbsentedOtherEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return createCalendar(calendarCreateArgument,Event.ABSENTED_OTHER);
     }
 
     @Override

@@ -9,19 +9,7 @@ import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import java.util.List;
 
 public interface GetCompanyAction  {
-     Calendar createCalendar(CalendarCreateArgument calendarCreateArgument, Event event) throws Exception, ErrorCustom;
-
-
-     Calendar setAbsentedHolidayEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-
-
-     Calendar setPresenceAtWorkEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-
-
-     Calendar setAbsentedMedicalEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-
-
-     Calendar setAbsentedOtherEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
+     Calendar createCalendar(CalendarCreateArgument calendarCreateArgument, Event event) throws ErrorCustom;
 
     List<Calendar> getAll();
 

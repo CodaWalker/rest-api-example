@@ -27,5 +27,4 @@ public class DepartmentDto {
 
     @ApiModelProperty("Дата последнего рабочего дня отдела")
     private LocalDateTime lastWorkingDate;
-
 }
