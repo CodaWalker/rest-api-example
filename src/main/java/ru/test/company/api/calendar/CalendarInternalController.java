@@ -20,11 +20,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 @Api("Внутренний контроллер календаря")
 public class CalendarInternalController {
     private final GetCompanyAction getCompanyAction;
+    private final CalendarService calendarService;
     private final CalendarMapper calendarMapper;
 
     @Autowired
-    public CalendarInternalController(CalendarService calendarService, GetCompanyAction getCompanyAction, CalendarMapper calendarMapper) {
+    public CalendarInternalController(CalendarService calendarService, GetCompanyAction getCompanyAction, CalendarService calendarService1, CalendarMapper calendarMapper) {
         this.getCompanyAction = getCompanyAction;
+        this.calendarService = calendarService1;
         this.calendarMapper = calendarMapper;
     }
 
@@ -40,21 +42,21 @@ public class CalendarInternalController {
     @PutMapping("/create/set-absented-holiday")
     @ResponseStatus(CREATED)
     public CalendarDto setAbsentedHolidayIsDay(@RequestBody CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return calendarMapper.toDto(getCompanyAction.setAbsentedHolidayEmployee(calendarCreateArgument));
+        return calendarMapper.toDto(calendarService.setAbsentedHolidayEmployee(calendarCreateArgument));
     }
 
     @ApiOperation("Отметить больничный для сотрудника на текущий день")
     @PutMapping("/create/set-absented-medical")
     @ResponseStatus(CREATED)
     public CalendarDto setAbsentedMedicalIsDay(@RequestBody CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return calendarMapper.toDto(getCompanyAction.setAbsentedMedicalEmployee(calendarCreateArgument));
+        return calendarMapper.toDto(calendarService.setAbsentedMedicalEmployee(calendarCreateArgument));
     }
 
     @ApiOperation("Отметить прогул для сотрудника на текущий день")
     @PutMapping("/create/set-absented-other")
     @ResponseStatus(CREATED)
     public CalendarDto setAbsentedOtherIsDay(@RequestBody CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return calendarMapper.toDto(getCompanyAction.setAbsentedOtherEmployee(calendarCreateArgument));
+        return calendarMapper.toDto(calendarService.setAbsentedOtherEmployee(calendarCreateArgument));
     }
 
 }

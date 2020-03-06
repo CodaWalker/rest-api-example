@@ -75,61 +75,42 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(employeeFromDB.getLastWorkingDate() != null){
             System.out.println("Этот сотрудник уволен ранее");
         }else {
-            Employee employee = Employee.builder()
-                    .firstName(employeeFromDB.getFirstName())
-                    .lastName(employeeFromDB.getLastName())
-                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(LocalDateTime.now())
-                    .department(employeeFromDB.getDepartment())
-                    .presenceAtWork(false)
-                    .build();
-            employee.setID(id);
+            Employee employee = toCollectEmployee(id, false);
             return employeeRepository.save(employee);
         }
             return employeeFromDB;
     }
-
-    @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setPresenceAtWorkEmployee(UUID id) {
+    public Employee toCollectEmployee(UUID id,Boolean flag) {
         Employee employeeFromDB = getExisting(id);
-        if(employeeFromDB.getLastWorkingDate() != null){
+        if (employeeFromDB.getLastWorkingDate() != null) {
             System.out.println("Этот сотрудник уволен ранее");
-        }else {
+        } else {
             Employee employee = Employee.builder()
                     .firstName(employeeFromDB.getFirstName())
                     .lastName(employeeFromDB.getLastName())
                     .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
                     .lastWorkingDate(LocalDateTime.now())
                     .department(employeeFromDB.getDepartment())
-                    .presenceAtWork(false)
+                    .presenceAtWork(flag)
                     .build();
             employee.setID(id);
-            return employeeRepository.save(employee);
+            return employee;
         }
         return employeeFromDB;
+    }
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Employee setPresenceAtWorkEmployee(UUID id) {
+            Employee employee = toCollectEmployee(id,false);
+            return employeeRepository.save(employee);
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Employee setAbsentedAtWorkEmployee(UUID id) {
-        Employee employeeFromDB = getExisting(id);
-        if(employeeFromDB.getLastWorkingDate() != null){
-            System.out.println("Этот сотрудник уволен ранее");
-        }else {
-            Employee employee = Employee.builder()
-                    .firstName(employeeFromDB.getFirstName())
-                    .lastName(employeeFromDB.getLastName())
-                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(LocalDateTime.now())
-                    .department(employeeFromDB.getDepartment())
-                    .presenceAtWork(false)
-                    .build();
-            employee.setID(id);
-            return employeeRepository.save(employee);
+        Employee employee = toCollectEmployee(id,true);
+        return employeeRepository.save(employee);
         }
-        return employeeFromDB;
-    }
 
     @Override
     public Employee deleteEmployee(UUID id) {
@@ -159,8 +140,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Long getCountWorkDaysInCompany(UUID uuid) {
-        Employee employee = getExisting(uuid);
-
         return null;
     }
 
