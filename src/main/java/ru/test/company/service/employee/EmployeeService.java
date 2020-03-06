@@ -18,10 +18,6 @@ public interface EmployeeService {
     Long getCountDaysInCompany(UUID uuid);
 
     Long getCountWorkDaysInCompany(UUID uuid);
-
-    Employee setAbsentedHolidayEmployee(UUID uuid);
-
-    Employee setAbsentedMedicalEmployee(UUID uuid);
-
-    Employee setAbsentedOtherEmployee(UUID uuid);
+    Employee setPresenceAtWorkEmployee(UUID id);
+    Employee setAbsentedAtWorkEmployee(UUID id);
 }

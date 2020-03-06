@@ -95,27 +95,10 @@ public class EmployeeInternalController{
          return employeeMapper.toDto(employeeService.updateEmployee(id, EmployeeUpdateArgument.builder()
                                         .firstName(updateDto.getFirstName())
                                         .lastName(updateDto.getLastName())
+                                        .presenceAtWork(updateDto.getPresenceAtWork())
                                         .department_id(UUID.fromString(updateDto.getDepartment_name()))
                                         .event(updateDto.getEvent())
                                         .build()));
-    }
-
-    @ApiOperation("Отметить отпуск для сотрудника на текущий день")
-    @PutMapping("/set-absented-holiday/{id}")
-    public EmployeeDto setAbsentedHolidayIsDay(@PathVariable UUID id) {
-        return employeeMapper.toDto(employeeService.setAbsentedHolidayEmployee(id));
-    }
-
-    @ApiOperation("Отметить больничный для сотрудника на текущий день")
-    @PutMapping("/set-absented-medical/{id}")
-    public EmployeeDto setAbsentedMedicalIsDay(@PathVariable UUID id) {
-        return employeeMapper.toDto(employeeService.setAbsentedMedicalEmployee(id));
-    }
-
-    @ApiOperation("Отметить прогул для сотрудника на текущий день")
-    @PutMapping("/set-absented-other/{id}")
-    public EmployeeDto setAbsentedOtherIsDay(@PathVariable UUID id) {
-        return employeeMapper.toDto(employeeService.setAbsentedOtherEmployee(id));
     }
 
 }

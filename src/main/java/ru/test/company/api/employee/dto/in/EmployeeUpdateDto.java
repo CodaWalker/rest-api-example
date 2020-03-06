@@ -36,4 +36,7 @@ public class EmployeeUpdateDto {
 
     @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
     private Event event;
+
+    @ApiModelProperty("Присутствие сотрудника")
+    private Boolean presenceAtWork;
 }

@@ -43,4 +43,8 @@ public class EmployeeDto {
 
     @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
     private Event event;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ApiModelProperty("Присутствие сотрудника")
+    private Boolean presenceAtWork;
 }

@@ -3,9 +3,7 @@ package ru.test.company.service.calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.employee.Event;
 import ru.test.company.repository.calendar.CalendarRepository;
-import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 import ru.test.company.service.employee.EmployeeService;
 
@@ -17,21 +15,16 @@ public class CalendarServiceImpl implements CalendarService{
     private final CalendarRepository calendarRepository;
     private final EmployeeService employeeService;
 
+
     @Autowired
-    public CalendarServiceImpl(CalendarRepository calendarRepository, EmployeeService employeeService) {
+    public CalendarServiceImpl(CalendarRepository calendarRepository, EmployeeService employeeService ) {
         this.calendarRepository = calendarRepository;
         this.employeeService = employeeService;
     }
 
     @Override
-    public Calendar createCalendar(CalendarCreateArgument calendarCreateArgument) {
-        return calendarRepository.save(Calendar.builder()
-                .employee(employeeService.getExisting(calendarCreateArgument.getEmployeeId()))
-                .event(calendarCreateArgument.getEvent())
-                .startIntervalDate(calendarCreateArgument.getStartIntervalDate())
-                .endIntervalDate(calendarCreateArgument.getEndIntervalDate())
-                .build());
-
+    public Calendar createCalendar(Calendar calendar) {
+        return calendarRepository.save(calendar);
     }
 
     @Override
@@ -58,4 +51,7 @@ public class CalendarServiceImpl implements CalendarService{
     public List<Calendar> getAllCalendarByEmployeeId(UUID employeeId) {
         return calendarRepository.getCalendarsByEmployee_Id(employeeId);
     }
+
+
+
 }

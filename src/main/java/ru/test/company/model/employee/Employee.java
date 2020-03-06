@@ -1,5 +1,6 @@
 package ru.test.company.model.employee;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.test.company.model.BaseEntity;
@@ -45,16 +46,14 @@ public class Employee extends BaseEntity {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    /** Событие связанное с пребыванием или отстутсвием сотрудника */
-    @Builder.Default
-    @Column(name = "EVENT", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK'")
-    @Enumerated(EnumType.STRING)
-    private Event event;
+    /** Пристуствие на работе */
+    @Column(name = "PRESENCE_AT_WORK")
+    private Boolean presenceAtWork;
 
     /** Инфиализация */
     @PrePersist
     private void setInitialValues() {
-        event = Event.PRESENCE_AT_WORK;
+        presenceAtWork = true;
         firstWorkingDate = LocalDateTime.now();
     }
 }

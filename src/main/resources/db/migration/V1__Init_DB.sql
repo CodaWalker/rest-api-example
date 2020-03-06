@@ -17,10 +17,13 @@ create table department (
 );
 create table employees (
     id varchar(36) not null,
-    event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
-    first_name varchar(255), first_working_date timestamp,
-    last_name varchar(255), last_working_date timestamp,
-    department_id varchar(36), primary key (id)
+    first_name varchar(255),
+    first_working_date timestamp,
+    last_name varchar(255),
+    last_working_date timestamp,
+    presence_at_work boolean,
+    department_id varchar(36),
+    primary key (id)
 );
 alter table calendar
     add constraint FKnmah044irgqhhna8e5gtak0ri foreign key (employee_id) references employees;

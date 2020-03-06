@@ -52,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .firstWorkingDate(employeeUpdateArgument.getFirstWorkingDate())
                 .lastWorkingDate(employeeUpdateArgument.getLastWorkingDate())
                 .department(departmentService.getExisting(employeeUpdateArgument.getDepartment_id()))
-                .event(employeeUpdateArgument.getEvent())
+                .presenceAtWork(employeeUpdateArgument.getPresenceAtWork())
                 .build();
         employee.setID(uuid);
         return employeeRepository.save(employee);
@@ -72,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Employee dismissEmployee(UUID id) {
         Employee employeeFromDB = getExisting(id);
-        if(employeeFromDB.getEvent().equals(Event.DISMISS)){
+        if(employeeFromDB.getLastWorkingDate() != null){
             System.out.println("Этот сотрудник уволен ранее");
         }else {
             Employee employee = Employee.builder()
@@ -81,12 +81,54 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
                     .lastWorkingDate(LocalDateTime.now())
                     .department(employeeFromDB.getDepartment())
-                    .event(Event.DISMISS)
+                    .presenceAtWork(false)
                     .build();
             employee.setID(id);
             return employeeRepository.save(employee);
         }
             return employeeFromDB;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Employee setPresenceAtWorkEmployee(UUID id) {
+        Employee employeeFromDB = getExisting(id);
+        if(employeeFromDB.getLastWorkingDate() != null){
+            System.out.println("Этот сотрудник уволен ранее");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
+                    .lastWorkingDate(LocalDateTime.now())
+                    .department(employeeFromDB.getDepartment())
+                    .presenceAtWork(false)
+                    .build();
+            employee.setID(id);
+            return employeeRepository.save(employee);
+        }
+        return employeeFromDB;
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public Employee setAbsentedAtWorkEmployee(UUID id) {
+        Employee employeeFromDB = getExisting(id);
+        if(employeeFromDB.getLastWorkingDate() != null){
+            System.out.println("Этот сотрудник уволен ранее");
+        }else {
+            Employee employee = Employee.builder()
+                    .firstName(employeeFromDB.getFirstName())
+                    .lastName(employeeFromDB.getLastName())
+                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
+                    .lastWorkingDate(LocalDateTime.now())
+                    .department(employeeFromDB.getDepartment())
+                    .presenceAtWork(false)
+                    .build();
+            employee.setID(id);
+            return employeeRepository.save(employee);
+        }
+        return employeeFromDB;
     }
 
     @Override
@@ -96,7 +138,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             System.out.println("Не найден сотрудник!");
             return null;
         }
-        if(!employeeFromDB.getEvent().equals(Event.DISMISS)){
+        if(employeeFromDB.getLastWorkingDate() == null){
             System.out.println("Этот сотрудник не уволен, сначала увольте его!");
         }else {
             employeeRepository.delete(employeeFromDB);
@@ -108,7 +150,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Long getCountDaysInCompany(UUID uuid) {
         Employee employee = getExisting(uuid);
         LocalDateTime localDateTime2 = employee.getFirstWorkingDate();
-        if(employee.getEvent().equals(Event.DISMISS) && employee.getLastWorkingDate() != null){
+        if(employee.getLastWorkingDate() != null){
             return localDateTime2.until(employee.getLastWorkingDate(), ChronoUnit.DAYS);
         }
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -122,65 +164,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
 
-    @Override
-    public Employee setAbsentedHolidayEmployee(UUID uuid) {
-        Employee employeeFromDB = getExisting(uuid);
-        if(employeeFromDB.getEvent().equals(Event.DISMISS)){
-            System.out.println("Этот сотрудник уволен ранее");
-        }else {
-            Employee employee = Employee.builder()
-                    .firstName(employeeFromDB.getFirstName())
-                    .lastName(employeeFromDB.getLastName())
-                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
-                    .department(employeeFromDB.getDepartment())
-                    .event(employeeFromDB.getEvent())
-                    .build();
-            employee.setID(uuid);
-            return employeeRepository.save(employee);
-        }
-        return employeeFromDB;
-    }
 
-    @Override
-    public Employee setAbsentedMedicalEmployee(UUID uuid) {
-        Employee employeeFromDB = getExisting(uuid);
-        if(employeeFromDB.getEvent().equals(Event.ABSENTED_MEDICAL)){
-            System.out.println("Этот сотрудник уже отмечен");
-        }else {
-            Employee employee = Employee.builder()
-                    .firstName(employeeFromDB.getFirstName())
-                    .lastName(employeeFromDB.getLastName())
-                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
-                    .department(employeeFromDB.getDepartment())
-                    .event(Event.ABSENTED_MEDICAL)
-                    .build();
-            employee.setID(uuid);
-            return employeeRepository.save(employee);
-        }
-        return employeeFromDB;
-    }
-
-    @Override
-    public Employee setAbsentedOtherEmployee(UUID uuid) {
-        Employee employeeFromDB = getExisting(uuid);
-        if(employeeFromDB.getEvent().equals(Event.ABSENTED_OTHER)){
-            System.out.println("Этот сотрудник уже отмечен");
-        }else {
-            Employee employee = Employee.builder()
-                    .firstName(employeeFromDB.getFirstName())
-                    .lastName(employeeFromDB.getLastName())
-                    .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
-                    .department(employeeFromDB.getDepartment())
-                    .event(Event.ABSENTED_OTHER)
-                    .build();
-            employee.setID(uuid);
-            return employeeRepository.save(employee);
-        }
-        return employeeFromDB;
-    }
 
 
 }

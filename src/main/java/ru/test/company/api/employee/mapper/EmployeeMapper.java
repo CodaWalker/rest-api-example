@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-
     Employee toEntity(EmployeeDto dto);
 
     @Mapping(target="department_id", source="entity.department.id")

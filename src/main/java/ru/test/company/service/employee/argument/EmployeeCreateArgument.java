@@ -1,8 +1,10 @@
 package ru.test.company.service.employee.argument;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import ru.test.company.error.EmployeeError;
 import ru.test.company.util.validator.Validator;
 
@@ -12,9 +14,11 @@ import java.util.UUID;
 
 /** Аргумент создания сотрудника */
 @Getter
+@Setter
 @Builder
+@AllArgsConstructor
 public class EmployeeCreateArgument {
-    public EmployeeCreateArgument(String firstName, String lastName, LocalDateTime firstWorkingDate, UUID department_id) {
+    public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, UUID department_id) {
 
         Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
         Validator.validateObjectParam(lastName, EmployeeError.EMPLOYEE_LAST_NAME_IS_MANDATORY);
@@ -24,10 +28,12 @@ public class EmployeeCreateArgument {
         this.lastName = lastName;
         this.firstWorkingDate = firstWorkingDate;
         this.department_id = department_id;
+        this.presenceAtWork = presenceAtWork;
     }
 
     private String firstName;
     private String lastName;
     private LocalDateTime firstWorkingDate;
     private UUID department_id;
+    private Boolean presenceAtWork;
 }

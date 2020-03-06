@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.test.company.api.department.dto.in.DepartmentCreateDto;
 import ru.test.company.model.department.Department;
+import ru.test.company.model.employee.Employee;
+import ru.test.company.model.employee.Event;
 import ru.test.company.repository.department.DepartmentRepository;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.department.argument.DepartmentUpdateArgument;
@@ -88,8 +90,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
     }
 
-    @PostConstruct
-    void initDepartment(){
-        createNoDepartment();
-    }
+
+//    @PostConstruct
+//    void initDepartment(){
+//        createNoDepartment();
+//    }
 }
