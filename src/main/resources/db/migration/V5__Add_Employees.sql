@@ -12,3 +12,7 @@ insert into employees (department_id, first_name, first_working_date, last_name,
     values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7c', 'Fedor', now() , 'Robov', null, '32089d54-7f7a-4190-9334-593193765c4c', true, '415440a7-80d4-4050-a838-0bae446e98f9');
 insert into employees (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
     values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7d', 'Grigory', now() , 'Rasputin', null, null, true, '415440a8-80d4-4050-a838-0bae446e98f9');
+insert into employees (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Semen', now() , 'Sokov', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, '60820c65-c952-4027-9a29-2adc98d58f39');
+insert into employees (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Dmitry', now() , 'Laptev', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, 'e6468c88-f4bb-44e9-9e74-f376b00c868b');

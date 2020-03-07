@@ -125,6 +125,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     @Override
+    public List<Employee> getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId) {
+        System.out.println(employeeRepository.findUserByDepartmentIdAndPositionId(positionId,departmentId));
+        return employeeRepository.findUserByDepartmentIdAndPositionId(positionId, departmentId);
+    }
+
+    @Override
     @Transactional
     public Employee deleteEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
