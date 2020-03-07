@@ -29,12 +29,15 @@ public class CalendarAction {
     }
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
-
         Employee employee = getEmployee(dto);
         if(employee.getLastWorkingDate() != null){
 //            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         }
+        if(employee.getDepartment().getName().equals("noDepartment")) {
+            throw new ErrorCustom(5,"У сотрудника не установлен отдел");
+        }
+
         LocalDateTime startIntervalDate = LocalDateTime.now();
         LocalDateTime finishIntervalDate = LocalDateTime.now();
         try {
