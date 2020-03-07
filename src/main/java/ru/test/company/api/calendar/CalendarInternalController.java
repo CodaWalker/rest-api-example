@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.test.company.action.CalendarAction;
+import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.api.calendar.dto.out.CalendarDto;
 import ru.test.company.api.calendar.mapper.CalendarMapper;
 import ru.test.company.error.ErrorCustom;
@@ -41,8 +42,8 @@ public class CalendarInternalController {
     @ApiOperation("Создать календарь")
     @PutMapping("/create")
     @ResponseStatus(CREATED)
-    public CalendarDto setAbsentedHolidayIsDay(@RequestBody CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        return calendarMapper.toDto(calendarAction.execute(calendarCreateArgument));
+    public CalendarDto setAbsentedHolidayIsDay(@RequestBody CalendarCreateDto dto) throws ErrorCustom {
+        return calendarMapper.toDto(calendarAction.execute(dto));
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CalendarService {
-    Calendar createCalendar(Calendar calendar);
+    Calendar createCalendar(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
     Calendar updateCalendar(UUID calendarId, CalendarUpdateArgument calendarUpdateArgument);
     void removeCalendar(UUID calendarId);
     Calendar getExisting(UUID calendarId);

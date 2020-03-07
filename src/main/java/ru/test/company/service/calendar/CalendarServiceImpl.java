@@ -2,8 +2,11 @@ package ru.test.company.service.calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.Calendar;
+import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.repository.calendar.CalendarRepository;
+import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
 import javax.swing.*;
@@ -21,7 +24,12 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
-    public Calendar createCalendar(Calendar calendar) {
+    public Calendar createCalendar(CalendarCreateArgument argument) throws ErrorCustom {
+        Calendar calendar = Calendar.builder()
+                .event(argument.getEvent())
+                .startIntervalDate(argument.getStartIntervalDate())
+                .endIntervalDate(argument.getEndIntervalDate())
+                .build();
         return calendarRepository.save(calendar);
     }
 

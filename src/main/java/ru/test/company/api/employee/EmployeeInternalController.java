@@ -28,13 +28,11 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class EmployeeInternalController{
 
     private final EmployeeService employeeService;
-    private final DepartmentService departmentService;
     private final EmployeeMapper employeeMapper;
 
     @Autowired
     public EmployeeInternalController(EmployeeService employeeService, DepartmentService departmentService, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
-        this.departmentService = departmentService;
         this.employeeMapper = employeeMapper;
     }
 
@@ -48,15 +46,15 @@ public class EmployeeInternalController{
     @PostMapping(value = "/create")
     @ResponseStatus(CREATED)
     public EmployeeDto create(@RequestBody EmployeeCreateDto dto) {
-            Department department = departmentService.getByName(dto.getDepartment_name());
-            if(department == null){
-                department = departmentService.getByName("NoDepartment");
-            }
+//            Department department = departmentService.getByName(dto.getDepartment_name());
+//            if(department == null){
+//                department = departmentService.getByName("NoDepartment");
+//            }
             return employeeMapper.toDto(employeeService.createEmployee(
                     EmployeeCreateArgument.builder().firstName(dto.getFirstName())
                             .lastName(dto.getLastName())
-                            .firstWorkingDate(LocalDateTime.now())
-                            .department_id(department.getId()).build()));
+                            .firstWorkingDate(LocalDateTime.now()).build()));
+//                            .department_id(department.getId()).build()));
     }
 
     @ApiOperation("Уволить сотрудника")

@@ -2,6 +2,7 @@ package ru.test.company.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.BaseEntity;
 import ru.test.company.model.calendar.Calendar;
@@ -26,30 +27,29 @@ public class CalendarAction {
         this.calendarService = calendarService;
     }
 
-    public  Calendar execute(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        Employee employee = getEmployee(calendarCreateArgument);
+    public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
+        Employee employee = getEmployee(dto);
 
         if(employee.getLastWorkingDate() != null){
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         }
-        LocalDateTime startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(calendarCreateArgument.getStartIntervalDate());
-        LocalDateTime finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(calendarCreateArgument.getEndIntervalDate());
-        Calendar calendar = Calendar.builder()
-                .employee(employee)
-                .event(calendarCreateArgument.getEvent())
+        LocalDateTime startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
+        LocalDateTime finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
+        CalendarCreateArgument calendarCreateArgument = CalendarCreateArgument.builder()
+                .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(finishIntervalDate)
                 .build();
-         return calendarService.createCalendar(calendar);
+         return calendarService.createCalendar(calendarCreateArgument);
     }
 
-    private Employee getEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
-        if(!calendarCreateArgument.getEvent().equals(Event.PRESENCE_AT_WORK)) {
-            employeeService.setPresenceAtWorkEmployee(calendarCreateArgument.getEmployeeId());
+    private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
+        if(!dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+            employeeService.setPresenceAtWorkEmployee(dto.getEmployeeId());
         }else {
-            employeeService.setAbsentedAtWorkEmployee(calendarCreateArgument.getEmployeeId());
+            employeeService.setAbsentedAtWorkEmployee(dto.getEmployeeId());
         }
-        return employeeService.getExisting(calendarCreateArgument.getEmployeeId());
+        return employeeService.getExisting(dto.getEmployeeId());
     }
 
 }
