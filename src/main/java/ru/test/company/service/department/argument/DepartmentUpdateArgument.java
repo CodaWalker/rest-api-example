@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 public class DepartmentUpdateArgument {
+
+    private final String name;
+    private final LocalDateTime lastWorkingDate;
+    private final LocalDateTime firstWorkingDate;
+    private final Integer department_id;
+
     public DepartmentUpdateArgument(String name,LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Integer department_id) {
 
 //        Validator.validateObjectParam(userId, TicketError.TICKET_USER_ID_IS_MANDATORY);
@@ -19,8 +25,5 @@ public class DepartmentUpdateArgument {
         this.lastWorkingDate = lastWorkingDate;
         this.department_id = department_id;
     }
-    private String name;
-    private LocalDateTime lastWorkingDate;
-    private LocalDateTime firstWorkingDate;
-    private Integer department_id;
+
 }

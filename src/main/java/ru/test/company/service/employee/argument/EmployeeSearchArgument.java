@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 /** Аргумент поиска сотрудника **/
 public class EmployeeSearchArgument {
 
-    private String firstName;
-    private String lastName;
-    private LocalDateTime lastWorkingDate;
-    private LocalDateTime firstWorkingDate;
-    private Integer department_id;
-    private Boolean presenceAtWork;
+    private final String firstName;
+    private final String lastName;
+    private final LocalDateTime lastWorkingDate;
+    private final LocalDateTime firstWorkingDate;
+    private final Integer department_id;
+    private final Boolean presenceAtWork;
 
 
 }

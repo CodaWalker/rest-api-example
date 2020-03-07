@@ -12,6 +12,7 @@ import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.CalendarService;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.employee.EmployeeService;
+import ru.test.company.util.validator.Validator;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class CalendarAction {
         Employee employee = getEmployee(dto);
 
         if(employee.getLastWorkingDate() != null){
+//            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         }
         LocalDateTime startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());

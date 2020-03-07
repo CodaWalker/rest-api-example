@@ -11,6 +11,12 @@ import java.util.UUID;
 @Getter
 @Builder
 public class CalendarUpdateArgument {
+
+    private final UUID employeeId;
+    private final Event event;
+    private final SimpleData startIntervalDate;
+    private final SimpleData endIntervalDate;
+
     public CalendarUpdateArgument(UUID employeeId, Event event, SimpleData startIntervalDate, SimpleData endIntervalDate) {
 
 //       Validator.validateObjectParam(name, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
@@ -21,10 +27,5 @@ public class CalendarUpdateArgument {
         this.startIntervalDate = startIntervalDate;
         this.endIntervalDate = endIntervalDate;
     }
-
-    private UUID employeeId;
-    private Event event;
-    private SimpleData startIntervalDate;
-    private SimpleData endIntervalDate;
 
 }

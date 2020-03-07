@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class DepartmentCreateArgument {
+    private final String name;
+    private final LocalDateTime lastWorkingDate;
+    private final LocalDateTime firstWorkingDate;
+
     public DepartmentCreateArgument(String name, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate) {
 
 //       Validator.validateObjectParam(name, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
@@ -17,8 +21,6 @@ public class DepartmentCreateArgument {
         this.firstWorkingDate = firstWorkingDate;
         this.lastWorkingDate = lastWorkingDate;
     }
-    private String name;
-    private LocalDateTime lastWorkingDate;
-    private LocalDateTime firstWorkingDate;
+
 }
 

@@ -12,6 +12,15 @@ import java.util.UUID;
 @AllArgsConstructor
 /** Аргумент обновления сотрудника */
 public class EmployeeUpdateArgument {
+
+    private final String firstName;
+    private final String lastName;
+    private final LocalDateTime lastWorkingDate;
+    private final LocalDateTime firstWorkingDate;
+    private final UUID department_id;
+    private final Event event;
+    private final Boolean presenceAtWork;
+
     public EmployeeUpdateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, UUID department_id, Event event) {
 
 //        Validator.validateObjectParam(userId, TicketError.TICKET_USER_ID_IS_MANDATORY);
@@ -28,12 +37,6 @@ public class EmployeeUpdateArgument {
 
 
     }
-    private String firstName;
-    private String lastName;
-    private LocalDateTime lastWorkingDate;
-    private LocalDateTime firstWorkingDate;
-    private UUID department_id;
-    private Event event;
-    private Boolean presenceAtWork;
+
 
 }

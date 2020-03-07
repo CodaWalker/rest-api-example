@@ -18,6 +18,13 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class EmployeeCreateArgument {
+
+    private final String firstName;
+    private final String lastName;
+    private final LocalDateTime firstWorkingDate;
+    private final UUID department_id;
+    private final Boolean presenceAtWork;
+
     public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, UUID department_id) {
 
         Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
@@ -31,9 +38,5 @@ public class EmployeeCreateArgument {
         this.presenceAtWork = presenceAtWork;
     }
 
-    private String firstName;
-    private String lastName;
-    private LocalDateTime firstWorkingDate;
-    private UUID department_id;
-    private Boolean presenceAtWork;
+
 }

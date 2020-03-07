@@ -1,9 +1,9 @@
 package ru.test.company.service.calendar.argument;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;
 
 import java.time.LocalDateTime;
@@ -12,6 +12,11 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class CalendarCreateArgument {
+
+    private final Event event;
+    private final LocalDateTime startIntervalDate;
+    private final LocalDateTime endIntervalDate;
+
     public CalendarCreateArgument(Event event, LocalDateTime startIntervalDate, LocalDateTime endIntervalDate) {
 
 //       Validator.validateObjectParam(name, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
@@ -22,7 +27,5 @@ public class CalendarCreateArgument {
         this.event = event;
     }
 
-    private LocalDateTime startIntervalDate;
-    private LocalDateTime endIntervalDate;
-    private Event event;
+
 }

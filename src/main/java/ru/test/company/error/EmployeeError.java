@@ -11,6 +11,8 @@ public class EmployeeError {
     public static final String EMPLOYEE_CREATE_ARGUMENT_IS_MANDATORY = "Аргумент создания сотрудника является обязательным аргументом";
     public static final String EMPLOYEE_UPDATE_ARGUMENT_IS_MANDATORY = "Аргумент обновления сотрудника является обязательным аргументом";
     public static final String EMPLOYEE_NOT_FOUND = "Сотрудник не найден";
+    public static final String EMPLOYEE_FIRED = "Сотрудник уволен ранее";
+    public static final String EMPLOYEE_NOT_FIRED = "Сотрудник еще не уволен";
 
 
 }

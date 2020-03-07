@@ -8,10 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class DepartmentSearchArgument {
-
-    private String name;
-    private LocalDateTime lastWorkingDate;
-    private LocalDateTime firstWorkingDate;
-    private Integer department_id;
+    private final String name;
+    private final LocalDateTime lastWorkingDate;
+    private final LocalDateTime firstWorkingDate;
+    private final Integer department_id;
 }
 

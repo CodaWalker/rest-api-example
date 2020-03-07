@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
-import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
 
