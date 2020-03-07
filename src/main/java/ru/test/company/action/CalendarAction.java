@@ -29,6 +29,7 @@ public class CalendarAction {
     }
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
+
         Employee employee = getEmployee(dto);
         if(employee.getLastWorkingDate() != null){
 //            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
@@ -61,9 +62,8 @@ public class CalendarAction {
         if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
             employeeService.setPresenceAtWorkEmployee(dto.getEmployeeId());
         }else {
-            employeeService.setAbsentedAbsentedAtWorkEmployee(dto.getEmployeeId());
+            employeeService.setAbsentedAtWorkEmployee(dto.getEmployeeId());
         }
         return employeeService.getExisting(dto.getEmployeeId());
     }
-
 }
