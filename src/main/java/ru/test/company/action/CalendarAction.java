@@ -30,20 +30,31 @@ public class CalendarAction {
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
-
         if(employee.getLastWorkingDate() != null){
 //            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         }
-        LocalDateTime startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
-        LocalDateTime finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
-        CalendarCreateArgument argument = CalendarCreateArgument.builder()
-                .event(dto.getEvent())
-                .startIntervalDate(startIntervalDate)
-                .endIntervalDate(finishIntervalDate)
-                .employee(employee)
-                .build();
-         return calendarService.createCalendar(argument);
+        LocalDateTime startIntervalDate = LocalDateTime.now();
+        LocalDateTime finishIntervalDate = LocalDateTime.now();
+        try {
+           startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
+           finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
+        }catch (ErrorCustom e){
+            CalendarCreateArgument argument = CalendarCreateArgument.builder()
+                    .event(dto.getEvent())
+                    .startIntervalDate(startIntervalDate)
+                    .endIntervalDate(finishIntervalDate)
+                    .employee(employee)
+                    .build();
+            return calendarService.createCalendar(argument);
+        }
+            CalendarCreateArgument argument = CalendarCreateArgument.builder()
+                    .event(dto.getEvent())
+                    .startIntervalDate(startIntervalDate)
+                    .endIntervalDate(finishIntervalDate)
+                    .employee(employee)
+                    .build();
+            return calendarService.createCalendar(argument);
     }
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
