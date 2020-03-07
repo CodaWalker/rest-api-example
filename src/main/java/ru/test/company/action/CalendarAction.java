@@ -41,21 +41,20 @@ public class CalendarAction {
            startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
            finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
         }catch (ErrorCustom e){
-            CalendarCreateArgument argument = CalendarCreateArgument.builder()
-                    .event(dto.getEvent())
-                    .startIntervalDate(startIntervalDate)
-                    .endIntervalDate(finishIntervalDate)
-                    .employee(employee)
-                    .build();
+            CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
             return calendarService.createCalendar(argument);
         }
-            CalendarCreateArgument argument = CalendarCreateArgument.builder()
-                    .event(dto.getEvent())
-                    .startIntervalDate(startIntervalDate)
-                    .endIntervalDate(finishIntervalDate)
-                    .employee(employee)
-                    .build();
-            return calendarService.createCalendar(argument);
+        CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
+        return calendarService.createCalendar(argument);
+    }
+
+    private CalendarCreateArgument getCalendarCreateArgument(CalendarCreateDto dto, Employee employee, LocalDateTime startIntervalDate, LocalDateTime finishIntervalDate) {
+        return CalendarCreateArgument.builder()
+                .event(dto.getEvent())
+                .startIntervalDate(startIntervalDate)
+                .endIntervalDate(finishIntervalDate)
+                .employee(employee)
+                .build();
     }
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {

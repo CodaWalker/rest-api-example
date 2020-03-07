@@ -34,8 +34,9 @@ public class EmployeeUpdateDto {
     @ApiModelProperty("Название отдела")
     private String department_name;
 
-    @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
-    private Event event;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ApiModelProperty("Название должности")
+    private String position_name;
 
     @ApiModelProperty("Присутствие сотрудника")
     private Boolean presenceAtWork;

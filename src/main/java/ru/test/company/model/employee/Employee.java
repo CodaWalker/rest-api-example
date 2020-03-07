@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.test.company.model.BaseEntity;
 import ru.test.company.model.department.Department;
+import ru.test.company.model.position.Position;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,6 +46,11 @@ public class Employee extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
+
+    /** Должность **/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     /** Пристуствие на работе */
     @Column(name = "PRESENCE_AT_WORK")

@@ -93,9 +93,9 @@ public class EmployeeInternalController{
         return employeeMapper.toDto(employeeService.setPresenceAtWorkEmployee(id));
     }
 
-    @ApiOperation("Отметим посещение")
-    @PutMapping("/set-presence-at-work/{id}")
+    @ApiOperation("Отметим прогул")
+    @PutMapping("/set-absented-at-work/{id}")
     public EmployeeDto setAbsented(@PathVariable UUID id) throws ErrorCustom {
-        return employeeMapper.toDto(employeeService.setAbsentedAbsentedAtWorkEmployee(id));
+        return employeeMapper.toDto(employeeService.setAbsentedAtWorkEmployee(id));
     }
 }

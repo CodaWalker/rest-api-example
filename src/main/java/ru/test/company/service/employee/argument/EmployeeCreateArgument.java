@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.test.company.error.EmployeeError;
 import ru.test.company.model.department.Department;
+import ru.test.company.model.position.Position;
 import ru.test.company.util.validator.Validator;
 
 import java.time.LocalDateTime;
@@ -21,9 +22,11 @@ public class EmployeeCreateArgument {
     private final String lastName;
     private final LocalDateTime firstWorkingDate;
     private final Department department;
+    private final Position position;
     private final Boolean presenceAtWork;
 
-    public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, Department department) {
+    public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, Department department, Position position) {
+        this.position = position;
 
         Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
         Validator.validateObjectParam(lastName, EmployeeError.EMPLOYEE_LAST_NAME_IS_MANDATORY);

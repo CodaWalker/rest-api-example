@@ -1,5 +1,6 @@
 package ru.test.company.api.employee.dto.in;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class EmployeeSearchDto {
     @ApiModelProperty("Отдел сотрудника")
     private Integer department_id;
 
-    @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
-    private Event event;
+    @ApiModelProperty("ИД должности")
+    private String position_id;
+
 }

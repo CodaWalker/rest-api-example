@@ -38,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .firstName(argument.getFirstName())
                 .lastName(argument.getLastName())
                 .department(argument.getDepartment())
+                .position(argument.getPosition())
                 .build();
         return employeeRepository.save(employee);
     }
@@ -50,14 +51,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Employee updateEmployee(UUID uuid, EmployeeUpdateArgument employeeUpdateArgument) {
+    public Employee updateEmployee(UUID uuid, EmployeeUpdateArgument argument) {
         Employee employee = Employee.builder()
-                .firstName(employeeUpdateArgument.getFirstName())
-                .lastName(employeeUpdateArgument.getLastName())
-                .firstWorkingDate(employeeUpdateArgument.getFirstWorkingDate())
-                .lastWorkingDate(employeeUpdateArgument.getLastWorkingDate())
-                .department(employeeUpdateArgument.getDepartment())
-                .presenceAtWork(employeeUpdateArgument.getPresenceAtWork())
+                .firstName(argument.getFirstName())
+                .lastName(argument.getLastName())
+                .firstWorkingDate(argument.getFirstWorkingDate())
+                .lastWorkingDate(argument.getLastWorkingDate())
+                .department(argument.getDepartment())
+                .position(argument.getPosition())
+                .presenceAtWork(argument.getPresenceAtWork())
                 .build();
         employee.setID(uuid);
         return employeeRepository.save(employee);
@@ -102,6 +104,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
                     .lastWorkingDate(employeeFromDB.getLastWorkingDate())
                     .department(employeeFromDB.getDepartment())
+                    .position(employeeFromDB.getPosition())
                     .presenceAtWork(flag)
                     .build();
             employee.setID(id);
@@ -116,7 +119,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setAbsentedAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
+    public Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
         Employee employee = toCollectEmployee(id,false);
         return employeeRepository.save(employee);
         }

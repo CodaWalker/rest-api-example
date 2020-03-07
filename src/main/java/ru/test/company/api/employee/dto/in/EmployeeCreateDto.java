@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.test.company.model.employee.Event;
 
+import java.util.UUID;
+
 /** ДТО создания сотрудника */
 @Getter
 @Setter
@@ -21,8 +23,22 @@ public class EmployeeCreateDto {
     @ApiModelProperty("Фамилия сотрудника")
     private String lastName;
 
+    //В тестовых целях указываю на вход имя отдела
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ApiModelProperty("Название отдела")
     private String department_name;
+
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @ApiModelProperty("ИД отдела")
+//    private UUID department_id;
+
+    //В тестовых целях указываю на вход название должности
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ApiModelProperty("Название должности")
+    private String position_name;
+
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @ApiModelProperty("ИД должности")
+//    private UUID position_id;
 
 }

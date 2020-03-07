@@ -14,6 +14,8 @@ public interface EmployeeMapper {
 
     @Mapping(target="department_id", source="entity.department.id")
     @Mapping(target="department_name", source="entity.department.name")
+    @Mapping(target="position_id", source="entity.position.id")
+    @Mapping(target="position_name", source="entity.position.name")
     EmployeeDto toDto(Employee entity);
 
     @IterableMapping(qualifiedByName = "toDto")
