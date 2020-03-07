@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
+import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 import ru.test.company.repository.employee.EmployeeRepository;
@@ -70,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee dismissEmployee(UUID id) {
+    public Employee dismissEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
         if(employeeFromDB.getLastWorkingDate() != null){
             System.out.println("Этот сотрудник уволен ранее");
@@ -81,10 +82,13 @@ public class EmployeeServiceImpl implements EmployeeService {
             return employeeFromDB;
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee toCollectEmployee(UUID id,Boolean flag) {
+    public Employee toCollectEmployee(UUID id,Boolean flag) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
+        if(employeeFromDB == null){
+            throw new ErrorCustom(3,"Не найден сотрудник");
+        }
         if (employeeFromDB.getLastWorkingDate() != null) {
-            System.out.println("Этот сотрудник уволен ранее");
+            throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         } else {
             Employee employee = Employee.builder()
                     .firstName(employeeFromDB.getFirstName())
@@ -97,30 +101,28 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setID(id);
             return employee;
         }
-        return employeeFromDB;
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setPresenceAtWorkEmployee(UUID id) {
+    public Employee setPresenceAtWorkEmployee(UUID id) throws ErrorCustom {
             Employee employee = toCollectEmployee(id,false);
             return employeeRepository.save(employee);
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setAbsentedAtWorkEmployee(UUID id) {
+    public Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
         Employee employee = toCollectEmployee(id,true);
         return employeeRepository.save(employee);
         }
 
     @Override
-    public Employee deleteEmployee(UUID id) {
+    public Employee deleteEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
         if(employeeFromDB == null){
-            System.out.println("Не найден сотрудник!");
-            return null;
+            throw new ErrorCustom(3,"Не найден сотрудник");
         }
         if(employeeFromDB.getLastWorkingDate() == null){
-            System.out.println("Этот сотрудник не уволен, сначала увольте его!");
+            throw new ErrorCustom(2,"Этот сотрудник не уволен, необходимо предварительно его уволить");
         }else {
             employeeRepository.delete(employeeFromDB);
         }

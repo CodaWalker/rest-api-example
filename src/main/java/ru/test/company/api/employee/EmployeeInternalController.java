@@ -8,6 +8,7 @@ import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.employee.mapper.EmployeeMapper;
+import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
@@ -60,13 +61,13 @@ public class EmployeeInternalController{
 
     @ApiOperation("Уволить сотрудника")
     @PutMapping("/dismiss/{id}")
-    public EmployeeDto dismiss(@PathVariable UUID id) {
+    public EmployeeDto dismiss(@PathVariable UUID id) throws ErrorCustom {
         return employeeMapper.toDto(employeeService.dismissEmployee(id));
     }
 
     @ApiOperation("Удалить сотрудника")
     @PutMapping("/delete/{id}")
-    public EmployeeDto delete(@PathVariable UUID id) {
+    public EmployeeDto delete(@PathVariable UUID id) throws ErrorCustom {
         return employeeMapper.toDto(employeeService.deleteEmployee(id));
     }
 

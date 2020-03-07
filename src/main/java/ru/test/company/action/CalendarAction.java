@@ -13,26 +13,21 @@ import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.employee.EmployeeService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
-public class GetCompanyActionImpl implements GetCompanyAction{
+public class CalendarAction {
 
     private final EmployeeService employeeService;
     private final CalendarService calendarService;
 
     @Autowired
-    public GetCompanyActionImpl(EmployeeService employeeService, CalendarService calendarService) {
+    public CalendarAction(EmployeeService employeeService, CalendarService calendarService) {
         this.employeeService = employeeService;
         this.calendarService = calendarService;
     }
 
-    @Override
-    public Calendar createCalendar(CalendarCreateArgument calendarCreateArgument, Event event) throws ErrorCustom {
-                if(!event.equals(Event.PRESENCE_AT_WORK)) {
-                    employeeService.setPresenceAtWorkEmployee(calendarCreateArgument.getEmployeeId());
-                }
-        Employee employee = employeeService.getExisting(calendarCreateArgument.getEmployeeId());
+    public  Calendar execute(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
+        Employee employee = getEmployee(calendarCreateArgument);
 
         if(employee.getLastWorkingDate() != null){
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
@@ -41,23 +36,20 @@ public class GetCompanyActionImpl implements GetCompanyAction{
         LocalDateTime finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(calendarCreateArgument.getEndIntervalDate());
         Calendar calendar = Calendar.builder()
                 .employee(employee)
-                .event(event)
+                .event(calendarCreateArgument.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(finishIntervalDate)
                 .build();
-        calendarService.createCalendar(calendar);
-
-        return calendar;
-
+         return calendarService.createCalendar(calendar);
     }
 
-    @Override
-    public List<Calendar> getAll() {
-        return calendarService.getAll();
+    private Employee getEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom {
+        if(!calendarCreateArgument.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+            employeeService.setPresenceAtWorkEmployee(calendarCreateArgument.getEmployeeId());
+        }else {
+            employeeService.setAbsentedAtWorkEmployee(calendarCreateArgument.getEmployeeId());
+        }
+        return employeeService.getExisting(calendarCreateArgument.getEmployeeId());
     }
 
-    @Override
-    public <T extends BaseEntity> void execute() {
-
-    }
 }

@@ -1,6 +1,7 @@
 package ru.test.company.service.calendar;
 
 import ru.test.company.error.ErrorCustom;
+import ru.test.company.model.BaseEntity;
 import ru.test.company.model.calendar.Calendar;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
@@ -18,8 +19,4 @@ public interface CalendarService {
     List<Calendar> getAll();
     List<Calendar> getAllCalendarByEmployeeId(UUID calendarId);
 
-    Calendar setAbsentedHolidayEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-    Calendar setAbsentedMedicalEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-    Calendar setPresenceAtWorkEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
-    Calendar setAbsentedOtherEmployee(CalendarCreateArgument calendarCreateArgument) throws ErrorCustom;
 }
