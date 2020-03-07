@@ -5,6 +5,7 @@ import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Event;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 /** Аргумент обновления сотрудника */
 public class EmployeeUpdateArgument {
 
+    private final UUID uuid;
     private final String firstName;
     private final String lastName;
     private final LocalDateTime lastWorkingDate;
@@ -21,12 +23,13 @@ public class EmployeeUpdateArgument {
     private final Event event;
     private final Boolean presenceAtWork;
 
-    public EmployeeUpdateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Department department, Event event) {
+    public EmployeeUpdateArgument(UUID uuid, String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Department department, Event event) {
+
 
 //        Validator.validateObjectParam(userId, TicketError.TICKET_USER_ID_IS_MANDATORY);
 //        Validator.validateObjectParam(name, TicketError.TICKET_NAME_IS_MANDATORY);
 //        Validator.validateObjectParam(description, TicketError.TICKET_DESCRIPTION_IS_MANDATORY);
-
+        this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.firstWorkingDate = firstWorkingDate;

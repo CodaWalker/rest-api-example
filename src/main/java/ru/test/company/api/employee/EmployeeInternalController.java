@@ -82,14 +82,9 @@ public class EmployeeInternalController{
     @ApiOperation("Обновить сотрудника")
     @PutMapping("/update/{id}")
     public EmployeeDto update(@PathVariable UUID id,
-                            @RequestBody EmployeeUpdateDto updateDto) {
-         return employeeMapper.toDto(employeeService.updateEmployee(id, EmployeeUpdateArgument.builder()
-                                        .firstName(updateDto.getFirstName())
-                                        .lastName(updateDto.getLastName())
-                                        .presenceAtWork(updateDto.getPresenceAtWork())
-//                                        .department(UUID.fromString(updateDto.getDepartment_name()))
-                                        .event(updateDto.getEvent())
-                                        .build()));
+                            @RequestBody EmployeeUpdateDto updateDto) throws ErrorCustom {
+        return employeeMapper.toDto(employeeAction.execute(id,updateDto));
+
     }
 
 }

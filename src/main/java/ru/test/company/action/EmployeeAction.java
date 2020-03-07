@@ -5,19 +5,15 @@ import org.springframework.stereotype.Component;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.error.ErrorCustom;
-import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
-import ru.test.company.model.employee.Event;
-import ru.test.company.service.calendar.CalendarService;
-import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class EmployeeAction {
@@ -47,17 +43,18 @@ public class EmployeeAction {
                     .department(department).build();
     }
 
-    public Employee execute(EmployeeUpdateDto dto) throws ErrorCustom {
+    public Employee execute(UUID id, EmployeeUpdateDto dto) throws ErrorCustom {
         Department department = getDepartment(dto.getDepartment_name());
         if(department == null){
             department = departmentService.getByName("noDepartment");
         }
         EmployeeUpdateArgument argument = getEmployeeUpdateArgument(dto, department);
-        return employeeService.updateEmployee(department.getId(),argument);
+        return employeeService.updateEmployee(id,argument);
     }
 
     private EmployeeUpdateArgument getEmployeeUpdateArgument(EmployeeUpdateDto dto, Department department) {
-        return EmployeeUpdateArgument.builder().firstName(dto.getFirstName())
+        return EmployeeUpdateArgument.builder()
+                .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .firstWorkingDate(LocalDateTime.now())
                 .department(department).build();
