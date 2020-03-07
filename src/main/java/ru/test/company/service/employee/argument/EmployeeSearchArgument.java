@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import ru.test.company.model.department.Department;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +19,7 @@ public class EmployeeSearchArgument {
     private final String lastName;
     private final LocalDateTime lastWorkingDate;
     private final LocalDateTime firstWorkingDate;
-    private final Integer department_id;
+    private final Department department;
     private final Boolean presenceAtWork;
 
 

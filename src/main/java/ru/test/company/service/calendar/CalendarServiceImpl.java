@@ -2,8 +2,10 @@ package ru.test.company.service.calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.Calendar;
+import ru.test.company.model.employee.Employee;
 import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
@@ -22,31 +24,37 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
+    @Transactional
     public Calendar createCalendar(CalendarCreateArgument argument) throws ErrorCustom {
         Calendar calendar = Calendar.builder()
                 .event(argument.getEvent())
                 .startIntervalDate(argument.getStartIntervalDate())
                 .endIntervalDate(argument.getEndIntervalDate())
+                .employee(argument.getEmployee())
                 .build();
         return calendarRepository.save(calendar);
     }
 
     @Override
+    @Transactional
     public Calendar updateCalendar(UUID departmentId, CalendarUpdateArgument calendarUpdateArgument) {
         return null;
     }
 
     @Override
+    @Transactional
     public void removeCalendar(UUID calendarId) {
         calendarRepository.delete(getExisting(calendarId));
     }
 
     @Override
+    @Transactional
     public Calendar getExisting(UUID calendarId) {
         return calendarRepository.getOne(calendarId);
     }
 
     @Override
+    @Transactional
     public List<Calendar> getAll() {
         return calendarRepository.findAll();
     }

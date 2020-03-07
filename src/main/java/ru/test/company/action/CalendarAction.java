@@ -37,19 +37,20 @@ public class CalendarAction {
         }
         LocalDateTime startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
         LocalDateTime finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
-        CalendarCreateArgument calendarCreateArgument = CalendarCreateArgument.builder()
+        CalendarCreateArgument argument = CalendarCreateArgument.builder()
                 .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(finishIntervalDate)
+                .employee(employee)
                 .build();
-         return calendarService.createCalendar(calendarCreateArgument);
+         return calendarService.createCalendar(argument);
     }
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
-        if(!dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
             employeeService.setPresenceAtWorkEmployee(dto.getEmployeeId());
         }else {
-            employeeService.setAbsentedAtWorkEmployee(dto.getEmployeeId());
+            employeeService.setAbsentedAbsentedAtWorkEmployee(dto.getEmployeeId());
         }
         return employeeService.getExisting(dto.getEmployeeId());
     }

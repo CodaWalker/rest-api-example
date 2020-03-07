@@ -2,6 +2,7 @@ package ru.test.company.service.department;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.api.department.dto.in.DepartmentCreateDto;
 import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
@@ -25,6 +26,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public Department createDepartment(DepartmentCreateArgument departmentCreateArgument) {
         return departmentRepository.save(Department.builder()
                 .name(departmentCreateArgument.getName())
@@ -34,6 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public Department updateDepartment(UUID departmentId, DepartmentUpdateArgument departmentUpdateArgument) {
         return departmentRepository.save(Department.builder()
                 .name(departmentUpdateArgument.getName())
@@ -43,40 +46,27 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    @Transactional
     public void removeDepartment(UUID departmentId) {
         departmentRepository.delete(departmentRepository.getOne(departmentId));
     }
 
     @Override
+    @Transactional
     public Department getExisting(UUID departmentId) {
         return departmentRepository.getOne(departmentId);
     }
 
     @Override
+    @Transactional
     public List<Department> getAll() {
         return departmentRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Department getByName(String department_name) {
         return departmentRepository.getDepartmentByName(department_name);
-    }
-
-    @Override
-    public Department createNoDepartment() {
-        System.out.println("Проведена инциализация initDepartment");
-        DepartmentCreateDto dto;
-        Department department = getByName("NoDepartment");
-        if(department == null){
-            dto = new DepartmentCreateDto("NoDepartment");
-            return
-                    createDepartment(DepartmentCreateArgument.builder()
-                            .name(dto.getName())
-                            .build()
-            );
-        }
-
-        return department;
     }
 
     @Override
@@ -89,10 +79,4 @@ public class DepartmentServiceImpl implements DepartmentService {
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
     }
-
-
-//    @PostConstruct
-//    void initDepartment(){
-//        createNoDepartment();
-//    }
 }

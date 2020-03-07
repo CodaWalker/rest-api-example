@@ -16,7 +16,6 @@ public interface DepartmentService {
     void removeDepartment(UUID departmentId);
     Department getExisting(UUID departmentId);
     List<Department> getAll();
-    Department createNoDepartment();
     Department getByName(String department_name);
 
     Long getCountDaysInCompany(UUID id);

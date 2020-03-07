@@ -42,7 +42,7 @@ public class CalendarInternalController {
     @ApiOperation("Создать календарь")
     @PutMapping("/create")
     @ResponseStatus(CREATED)
-    public CalendarDto setAbsentedHolidayIsDay(@RequestBody CalendarCreateDto dto) throws ErrorCustom {
+    public CalendarDto create(@RequestBody CalendarCreateDto dto) throws ErrorCustom {
         return calendarMapper.toDto(calendarAction.execute(dto));
     }
 

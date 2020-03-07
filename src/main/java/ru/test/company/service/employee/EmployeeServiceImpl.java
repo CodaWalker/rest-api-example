@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.error.ErrorCustom;
+import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 import ru.test.company.repository.employee.EmployeeRepository;
@@ -31,28 +33,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Employee createEmployee(EmployeeCreateArgument employeeCreateArgument) {
+    public Employee createEmployee(EmployeeCreateArgument argument) {
         Employee employee = Employee.builder()
-                .firstName(employeeCreateArgument.getFirstName())
-                .lastName(employeeCreateArgument.getLastName())
-                .department(departmentService.getExisting(employeeCreateArgument.getDepartment_id()))
+                .firstName(argument.getFirstName())
+                .lastName(argument.getLastName())
+                .department(argument.getDepartment())
                 .build();
         return employeeRepository.save(employee);
     }
 
     @Override
+    @Transactional
     public Employee getExisting(UUID employeeId) {
         return employeeRepository.getOne(employeeId);
     }
 
     @Override
+    @Transactional
     public Employee updateEmployee(UUID uuid, EmployeeUpdateArgument employeeUpdateArgument) {
         Employee employee = Employee.builder()
                 .firstName(employeeUpdateArgument.getFirstName())
                 .lastName(employeeUpdateArgument.getLastName())
                 .firstWorkingDate(employeeUpdateArgument.getFirstWorkingDate())
                 .lastWorkingDate(employeeUpdateArgument.getLastWorkingDate())
-                .department(departmentService.getExisting(employeeUpdateArgument.getDepartment_id()))
+                .department(employeeUpdateArgument.getDepartment())
                 .presenceAtWork(employeeUpdateArgument.getPresenceAtWork())
                 .build();
         employee.setID(uuid);
@@ -60,11 +64,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public void removeEmployee(UUID employeeId) {
         employeeRepository.delete(employeeRepository.getOne(employeeId));
     }
 
     @Override
+    @Transactional
     public List<Employee> getAll() {
         return employeeRepository.findAll();
     }
@@ -94,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .firstName(employeeFromDB.getFirstName())
                     .lastName(employeeFromDB.getLastName())
                     .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(LocalDateTime.now())
+                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
                     .department(employeeFromDB.getDepartment())
                     .presenceAtWork(flag)
                     .build();
@@ -104,18 +110,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Employee setPresenceAtWorkEmployee(UUID id) throws ErrorCustom {
-            Employee employee = toCollectEmployee(id,false);
+            Employee employee = toCollectEmployee(id,true);
             return employeeRepository.save(employee);
     }
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
-        Employee employee = toCollectEmployee(id,true);
+    public Employee setAbsentedAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
+        Employee employee = toCollectEmployee(id,false);
         return employeeRepository.save(employee);
         }
 
     @Override
+    @Transactional
     public Employee deleteEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
         if(employeeFromDB == null){

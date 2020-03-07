@@ -4,18 +4,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.test.company.action.EmployeeAction;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.employee.mapper.EmployeeMapper;
 import ru.test.company.error.ErrorCustom;
-import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
-import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,11 +26,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class EmployeeInternalController{
 
     private final EmployeeService employeeService;
+    private final EmployeeAction employeeAction;
     private final EmployeeMapper employeeMapper;
 
     @Autowired
-    public EmployeeInternalController(EmployeeService employeeService, DepartmentService departmentService, EmployeeMapper employeeMapper) {
+    public EmployeeInternalController(EmployeeService employeeService, DepartmentService departmentService, EmployeeAction employeeAction, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
+        this.employeeAction = employeeAction;
         this.employeeMapper = employeeMapper;
     }
 
@@ -45,16 +45,8 @@ public class EmployeeInternalController{
     @ApiOperation("Создать сотрудника")
     @PostMapping(value = "/create")
     @ResponseStatus(CREATED)
-    public EmployeeDto create(@RequestBody EmployeeCreateDto dto) {
-//            Department department = departmentService.getByName(dto.getDepartment_name());
-//            if(department == null){
-//                department = departmentService.getByName("NoDepartment");
-//            }
-            return employeeMapper.toDto(employeeService.createEmployee(
-                    EmployeeCreateArgument.builder().firstName(dto.getFirstName())
-                            .lastName(dto.getLastName())
-                            .firstWorkingDate(LocalDateTime.now()).build()));
-//                            .department_id(department.getId()).build()));
+    public EmployeeDto create(@RequestBody EmployeeCreateDto dto) throws ErrorCustom {
+            return employeeMapper.toDto(employeeAction.execute(dto));
     }
 
     @ApiOperation("Уволить сотрудника")
@@ -95,7 +87,7 @@ public class EmployeeInternalController{
                                         .firstName(updateDto.getFirstName())
                                         .lastName(updateDto.getLastName())
                                         .presenceAtWork(updateDto.getPresenceAtWork())
-                                        .department_id(UUID.fromString(updateDto.getDepartment_name()))
+//                                        .department(UUID.fromString(updateDto.getDepartment_name()))
                                         .event(updateDto.getEvent())
                                         .build()));
     }
