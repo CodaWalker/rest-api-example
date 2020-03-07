@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.position.dto.in.PositionCreateDto;
 import ru.test.company.api.position.dto.out.PositionDto;
 import ru.test.company.api.position.mapper.PositionMapper;
@@ -14,6 +15,7 @@ import ru.test.company.service.position.PositionService;
 import ru.test.company.service.position.argument.PositionCreateArgument;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -36,6 +38,13 @@ public class PositionInternalController {
     public List<PositionDto> getAll() {
         return positionMapper.toDtoListFromDB(positionService.getAll());
     }
+
+    @ApiOperation("Получить должность по идентификатору")
+    @GetMapping("/{id}")
+    public PositionDto get(@PathVariable UUID id) {
+        return positionMapper.toDto(positionService.getExisting(id));
+    }
+
 
     @ApiOperation("Создать должность")
     @PostMapping(value = "/create")

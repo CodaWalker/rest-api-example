@@ -8,6 +8,7 @@ import ru.test.company.repository.position.PositionRepository;
 import ru.test.company.service.position.argument.PositionCreateArgument;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PositionServiceImpl implements PositionService {
@@ -36,5 +37,10 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public Position getByName(String name) {
         return positionRepository.getPositionByName(name);
+    }
+
+    @Override
+    public Position getExisting(UUID id) {
+        return positionRepository.getOne(id);
     }
 }
