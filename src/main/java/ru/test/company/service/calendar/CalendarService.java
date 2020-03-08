@@ -3,6 +3,7 @@ package ru.test.company.service.calendar;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.BaseEntity;
 import ru.test.company.model.calendar.Calendar;
+import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
@@ -20,7 +21,7 @@ public interface CalendarService {
     Calendar getExisting(UUID calendarId);
     List<Calendar> getAll();
 
-    LocalDate getLatestHolidayInCompany(UUID id) ;
-
     Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDate end,Event event);
+
+    LocalDate getCalendarByLastDateAndEvent(UUID id, Event event) throws ErrorCustom;
 }

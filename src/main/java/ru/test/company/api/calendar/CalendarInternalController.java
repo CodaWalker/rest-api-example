@@ -9,11 +9,10 @@ import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.api.calendar.dto.out.CalendarDto;
 import ru.test.company.api.calendar.mapper.CalendarMapper;
 import ru.test.company.error.ErrorCustom;
+import ru.test.company.model.calendar.SimpleData;
+import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.CalendarService;
-import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +50,8 @@ public class CalendarInternalController {
 
     @ApiOperation("Получить дату последнего отпуска")
     @GetMapping("/report/get-latest-holiday/{id}")
-    public LocalDate getLatestHoliday(@PathVariable UUID id) {
-        return calendarService.getLatestHolidayInCompany(id);
+    public SimpleData getLatestHoliday(@PathVariable UUID id) throws ErrorCustom {
+        return SimpleData.convertLocalDateTimeToSimpleData(
+                calendarService.getCalendarByLastDateAndEvent(id, Event.ABSENTED_HOLIDAY));
     }
 }

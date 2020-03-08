@@ -40,8 +40,15 @@ public class CalendarServiceImpl implements CalendarService{
 
     @Override
     @Transactional
-    public Calendar updateCalendar(UUID departmentId, CalendarUpdateArgument calendarUpdateArgument) {
-        return null;
+    public Calendar updateCalendar(UUID id, CalendarUpdateArgument argument) {
+        Calendar calendar = Calendar.builder()
+                .event(argument.getEvent())
+                .startIntervalDate(argument.getStartIntervalDate())
+                .endIntervalDate(argument.getEndIntervalDate())
+                .employee(argument.getEmployee())
+                .build();
+        calendar.setId(id);
+        return calendarRepository.save(calendar);
     }
 
     @Override
@@ -63,22 +70,20 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
 
-
     @Override
-    public LocalDate getLatestHolidayInCompany(UUID id) {
-//        List<Calendar> calendars = calendarRepository.getCalendars(id);
-//        for (Calendar c:calendars
-//             ) {
-//            System.out.println(c);
-//        }
-//        Calendar calendar = calendars.get(calendars.size() - 1);
-//        return calendar.getEndIntervalDate();
-        return null;
+    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
+        Calendar calendar = calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
+        return calendar;
     }
 
     @Override
-    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
-        return calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
+    public LocalDate getCalendarByLastDateAndEvent(UUID id, Event event) throws ErrorCustom {
+        Calendar calendar = calendarRepository.findTopCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(id, event);
+        if(calendar != null){
+            return calendar.getEndIntervalDate();
+        }
+            throw new ErrorCustom(6,"У сотрудника нет событий связанных с" + event.name());
+
     }
 
 

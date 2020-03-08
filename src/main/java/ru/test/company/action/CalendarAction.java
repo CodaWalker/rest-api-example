@@ -3,20 +3,28 @@ package ru.test.company.action;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
+import ru.test.company.api.calendar.dto.in.CalendarSearchDto;
+import ru.test.company.api.calendar.dto.in.CalendarUpdateDto;
+import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.BaseEntity;
 import ru.test.company.model.calendar.Calendar;
 import ru.test.company.model.calendar.SimpleData;
+import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
+import ru.test.company.model.position.Position;
 import ru.test.company.service.calendar.CalendarService;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
+import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 import ru.test.company.service.employee.EmployeeService;
+import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 import ru.test.company.util.validator.Validator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class CalendarAction {
@@ -42,58 +50,77 @@ public class CalendarAction {
         if(employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }
-
         LocalDate startIntervalDate = LocalDate.now();
         LocalDate finishIntervalDate;
         try {
            startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
            finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
-
         }catch (ErrorCustom e){
             return getCalendar(dto, employee, startIntervalDate, startIntervalDate);
         }
-
         return getCalendar(dto, employee, startIntervalDate, finishIntervalDate);
     }
 
-    private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        if(startIntervalDate.getDayOfMonth() == finishIntervalDate.getDayOfMonth() &&
-                startIntervalDate.getDayOfYear() == finishIntervalDate.getDayOfYear() &&
-                startIntervalDate.getDayOfYear() == LocalDateTime.now().getDayOfYear() &&
-                startIntervalDate.getDayOfMonth() == LocalDateTime.now().getDayOfMonth()
-        ){
-            if(dto.getEvent() != Event.PRESENCE_AT_WORK) {
-                employeeService.setAbsentedAtWorkEmployee(employee.getId());
-            }else if(dto.getEvent() == Event.PRESENCE_AT_WORK){
-                employeeService.setPresenceAtWorkEmployee(employee.getId());
-            }
-        }
 
-        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
-          if(calendar != null){
-              System.out.println("calendar: ");
-              System.out.println(calendar.getId());
-              System.out.println(calendar.getEmployee());
-              System.out.println(calendar.getStartIntervalDate());
-              System.out.println(calendar.getEndIntervalDate());
-              System.out.println(calendar.getEvent());
-          }else{
-              System.out.println("null calendar");
-          }
+    public Calendar execute(UUID id, CalendarUpdateDto dto) throws ErrorCustom {
+        UUID employeeId = dto.getEmployeeId();
+        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+            employeeService.setPresenceAtWorkEmployee(employeeId);
+        }else {
+            employeeService.setAbsentedAtWorkEmployee(employeeId);
+        }
+        Employee employee = employeeService.getExisting(employeeId);
+        return getCalendar(id, dto, employee);
+
+    }
+    private Calendar getCalendar(UUID id, CalendarUpdateDto dto, Employee employee) throws ErrorCustom {
+        final LocalDate startIntervalDate = dto.getStartIntervalDate();
+        final LocalDate endIntervalDate = dto.getEndIntervalDate();
+        atWorkEmployee(dto.getEvent(), employee, startIntervalDate, endIntervalDate);
+
+//        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
+        // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
+
+        CalendarUpdateArgument argument = CalendarUpdateArgument.builder()
+                .event(dto.getEvent())
+                .startIntervalDate(startIntervalDate)
+                .endIntervalDate(endIntervalDate)
+                .employee(employee)
+                .build();
+
+
+        return calendarService.updateCalendar(id, argument);
+    }
+
+    private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
+        atWorkEmployee(dto.getEvent(), employee, startIntervalDate, finishIntervalDate);
+
+
+
 
             // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
 
-        CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
-        return calendarService.createCalendar(argument);
-    }
-
-    private CalendarCreateArgument getCalendarCreateArgument(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) {
-        return CalendarCreateArgument.builder()
+        CalendarCreateArgument argument = CalendarCreateArgument.builder()
                 .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(finishIntervalDate)
                 .employee(employee)
                 .build();
+        return calendarService.createCalendar(argument);
+    }
+
+    private void atWorkEmployee(Event event, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
+        if(startIntervalDate.getDayOfMonth() == finishIntervalDate.getDayOfMonth() &&
+                startIntervalDate.getDayOfYear() == finishIntervalDate.getDayOfYear() &&
+                startIntervalDate.getDayOfYear() == LocalDateTime.now().getDayOfYear() &&
+                startIntervalDate.getDayOfMonth() == LocalDateTime.now().getDayOfMonth()
+        ){
+            if(event != Event.PRESENCE_AT_WORK) {
+                employeeService.setAbsentedAtWorkEmployee(employee.getId());
+            }else {
+                employeeService.setPresenceAtWorkEmployee(employee.getId());
+            }
+        }
     }
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {

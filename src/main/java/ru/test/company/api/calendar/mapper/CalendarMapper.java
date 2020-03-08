@@ -5,9 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.test.company.api.calendar.dto.out.CalendarDto;
 import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.calendar.SimpleData;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -25,8 +23,6 @@ public interface CalendarMapper {
 
     @IterableMapping(qualifiedByName = "toDto")
     List<CalendarDto> toDtoListFromDB(List<Calendar> entityList);
-
-
 }
 
 

@@ -18,4 +18,9 @@ public interface CalendarRepository extends JpaRepository<Calendar, UUID> {
 
     @Query(nativeQuery = true, countQuery = "SELECT * FROM calendar WHERE employee_id = ? and event = ? and last_interval_date = ?")
     Calendar getCalendarByEmployeeIdAndEventAndEndIntervalDate(UUID employee_id, Event event, LocalDate endIntervalDate);
+
+    @Query(nativeQuery = true, countQuery = "SELECT * FROM calendar WHERE employee_id = ? and event = ? ORDER BY last_interval_date DESC;")
+    Calendar findTopCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(UUID employee_id, Event event);
+
+
 }
