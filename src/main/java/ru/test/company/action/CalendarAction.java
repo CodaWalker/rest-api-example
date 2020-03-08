@@ -66,6 +66,21 @@ public class CalendarAction {
                 employeeService.setPresenceAtWorkEmployee(employee.getId());
             }
         }
+
+//        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate.minusDays(1), dto.getEvent());
+//          if(calendar != null){
+//              System.out.println("calendar: ");
+//              System.out.println(calendar.getId());
+//              System.out.println(calendar.getEmployee());
+//              System.out.println(calendar.getStartIntervalDate());
+//              System.out.println(calendar.getEndIntervalDate());
+//              System.out.println(calendar.getEvent());
+//          }else{
+//              System.out.println("null calendar");
+//          }
+
+            // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
+
         CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
         return calendarService.createCalendar(argument);
     }

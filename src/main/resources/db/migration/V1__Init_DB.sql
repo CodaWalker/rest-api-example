@@ -2,10 +2,10 @@ create sequence hibernate_sequence start 1 increment 1;
 
 create table calendar
     (id varchar(36) not null,
-    last_working_date timestamp,
-    event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
-    first_working_date timestamp,
-    employee_id varchar(36),
+    last_interval_date timestamp,
+    first_interval_date timestamp,
+     event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
+     employee_id varchar(36),
     primary key (id)
 );
 create table department (

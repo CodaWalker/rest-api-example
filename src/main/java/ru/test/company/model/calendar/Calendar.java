@@ -29,12 +29,12 @@ public class Calendar extends BaseEntity {
     private Event event;
 
     /** Первый рабочий день **/
-    @Column(name = "FIRST_WORKING_DATE")
+    @Column(name = "FIRST_INTERVAL_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startIntervalDate;
 
     /** День увольнения **/
-    @Column(name = "LAST_WORKING_DATE")
+    @Column(name = "LAST_INTERVAL_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endIntervalDate;
 }

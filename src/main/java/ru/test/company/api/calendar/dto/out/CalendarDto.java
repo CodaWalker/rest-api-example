@@ -43,4 +43,7 @@ public class CalendarDto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ApiModelProperty("ИД департамента сотрудника")
     private UUID employee_departmentId;
+
+    @ApiModelProperty("Событие связанное с пребыванием или отстутсвием сотрудника")
+    private Event event;
 }

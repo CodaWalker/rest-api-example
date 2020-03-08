@@ -20,4 +20,6 @@ public interface CalendarService {
     List<Calendar> getAll();
 
     LocalDateTime getLatestHolidayInCompany(UUID id) ;
+
+    Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDateTime end,Event event);
 }

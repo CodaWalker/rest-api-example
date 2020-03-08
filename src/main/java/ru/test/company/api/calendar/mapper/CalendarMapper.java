@@ -20,6 +20,7 @@ public interface CalendarMapper {
     @Mapping(target="employee_firstName", source="entity.employee.firstName")
     @Mapping(target="employee_lastName", source="entity.employee.lastName")
     @Mapping(target="employee_departmentId", source="entity.employee.department.id")
+    @Mapping(target="event", source="entity.event")
     CalendarDto toDto(Calendar entity);
 
     @IterableMapping(qualifiedByName = "toDto")

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.Calendar;
 import ru.test.company.model.employee.Employee;
+import ru.test.company.model.employee.Event;
 import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
@@ -72,6 +73,11 @@ public class CalendarServiceImpl implements CalendarService{
 //        Calendar calendar = calendars.get(calendars.size() - 1);
 //        return calendar.getEndIntervalDate();
         return null;
+    }
+
+    @Override
+    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDateTime end, Event event) {
+        return calendarRepository.getCalendarByEmployeeIdAndEndIntervalDateAndEvent(id, end, event);
     }
 
 
