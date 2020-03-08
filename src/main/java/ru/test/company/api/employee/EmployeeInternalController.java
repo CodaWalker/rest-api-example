@@ -14,6 +14,7 @@ import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,6 +79,7 @@ public class EmployeeInternalController{
     public Long getWorkDays(@PathVariable UUID id) {
         return employeeService.getCountWorkDaysInCompany(id);
     }
+
 
     @ApiOperation("Обновить сотрудника")
     @PutMapping("/update/{id}")

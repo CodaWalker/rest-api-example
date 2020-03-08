@@ -12,7 +12,9 @@ import ru.test.company.error.ErrorCustom;
 import ru.test.company.service.calendar.CalendarService;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -46,5 +48,9 @@ public class CalendarInternalController {
         return calendarMapper.toDto(calendarAction.execute(dto));
     }
 
-
+    @ApiOperation("Получить дату последнего отпуска")
+    @GetMapping("/report/get-latest-holiday/{id}")
+    public LocalDateTime getLatestHoliday(@PathVariable UUID id) {
+        return calendarService.getLatestHolidayInCompany(id);
+    }
 }

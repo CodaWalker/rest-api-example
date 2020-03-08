@@ -15,7 +15,7 @@ create table department (
     name varchar(255),
     primary key (id)
 );
-create table employees (
+create table employee (
     id varchar(36) not null,
     first_name varchar(255),
     first_working_date timestamp,
@@ -32,8 +32,8 @@ create table position (
     primary key (id)
 );
 alter table calendar
-    add constraint FKnmah044irgqhhna8e5gtak0ri foreign key (employee_id) references employees;
-alter table employees
+    add constraint FKnmah044irgqhhna8e5gtak0ri foreign key (employee_id) references employee;
+alter table employee
     add constraint FK8if1byloc650qvkaxabyjveap foreign key (department_id) references department;
-alter table employees
+alter table employee
     add constraint FKagakceqm38ji4lb8q3j6rj8ij foreign key (position_id) references position;

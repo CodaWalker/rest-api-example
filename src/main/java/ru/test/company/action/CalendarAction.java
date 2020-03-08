@@ -37,7 +37,7 @@ public class CalendarAction {
         if(employee.getDepartment().getName().equals("noDepartment")) {
             throw new ErrorCustom(5,"У сотрудника не установлен отдел");
         }
-        if(employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getDepartment().getId(),employee.getPosition().getId()).size() < 2) {
+        if(employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }
 

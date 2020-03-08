@@ -17,7 +17,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "EMPLOYEES")
+@Table(name = "EMPLOYEE")
 public class Employee extends BaseEntity {
 
     public void setID(UUID uuid) {

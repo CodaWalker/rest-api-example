@@ -125,9 +125,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     @Override
-    public List<Employee> getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId) {
-        System.out.println(employeeRepository.findUserByDepartmentIdAndPositionId(positionId,departmentId));
-        return employeeRepository.findUserByDepartmentIdAndPositionId(positionId, departmentId);
+    public Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId) {
+        return employeeRepository.countAllByPositionIdAndDepartmentId(positionId, departmentId);
     }
 
     @Override

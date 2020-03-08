@@ -6,6 +6,8 @@ import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,5 +26,5 @@ public interface EmployeeService {
     Employee setPresenceAtWorkEmployee(UUID id) throws ErrorCustom;
     Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom;
 
-    List<Employee> getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
+    Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
 }

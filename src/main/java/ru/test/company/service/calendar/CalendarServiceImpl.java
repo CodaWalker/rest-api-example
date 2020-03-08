@@ -10,6 +10,7 @@ import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,12 +60,19 @@ public class CalendarServiceImpl implements CalendarService{
         return calendarRepository.findAll();
     }
 
+
+
     @Override
-    public List<Calendar> getAllCalendarByEmployeeId(UUID employeeId) {
-        return calendarRepository.getCalendarsByEmployee_Id(employeeId);
+    public LocalDateTime getLatestHolidayInCompany(UUID id) {
+//        List<Calendar> calendars = calendarRepository.getCalendars(id);
+//        for (Calendar c:calendars
+//             ) {
+//            System.out.println(c);
+//        }
+//        Calendar calendar = calendars.get(calendars.size() - 1);
+//        return calendar.getEndIntervalDate();
+        return null;
     }
-
-
 
 
 }

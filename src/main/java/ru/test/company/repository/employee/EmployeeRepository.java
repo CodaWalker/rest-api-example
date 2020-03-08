@@ -8,11 +8,12 @@ import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.position.Position;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
-    @Query(nativeQuery = false, countQuery = "SELECT Employee FROM Employee.position.id WHERE Employee.position.id=?1")
-    List<Employee> findUserByDepartmentIdAndPositionId(UUID positionId, UUID departmentId);
+    @Query(nativeQuery = true, countQuery = "SELECT COUNT(*) FROM Employee WHERE position_id = ? AND department_id = ?")
+    Integer countAllByPositionIdAndDepartmentId(UUID positionId,UUID departmentId);
 }

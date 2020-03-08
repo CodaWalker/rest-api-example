@@ -8,6 +8,7 @@ import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,6 @@ public interface CalendarService {
     void removeCalendar(UUID calendarId);
     Calendar getExisting(UUID calendarId);
     List<Calendar> getAll();
-    List<Calendar> getAllCalendarByEmployeeId(UUID calendarId);
 
+    LocalDateTime getLatestHolidayInCompany(UUID id) ;
 }
