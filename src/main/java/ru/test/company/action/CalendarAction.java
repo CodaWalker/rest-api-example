@@ -47,7 +47,7 @@ public class CalendarAction {
         if(employee.getDepartment().getName().equals("noDepartment")) {
             throw new ErrorCustom(5,"У сотрудника не установлен отдел");
         }
-        if(employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
+        if(employee.getPosition() != null && employee.getDepartment() != null && employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }
         LocalDate startIntervalDate = LocalDate.now();
