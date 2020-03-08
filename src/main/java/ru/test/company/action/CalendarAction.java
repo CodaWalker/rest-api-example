@@ -42,13 +42,29 @@ public class CalendarAction {
         }
 
         LocalDateTime startIntervalDate = LocalDateTime.now();
-        LocalDateTime finishIntervalDate = LocalDateTime.now();
+        LocalDateTime finishIntervalDate;
         try {
            startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
            finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
+
         }catch (ErrorCustom e){
-            CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
-            return calendarService.createCalendar(argument);
+            return getCalendar(dto, employee, startIntervalDate, startIntervalDate);
+        }
+
+        return getCalendar(dto, employee, startIntervalDate, finishIntervalDate);
+    }
+
+    private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDateTime startIntervalDate, LocalDateTime finishIntervalDate) throws ErrorCustom {
+        if(startIntervalDate.getDayOfMonth() == finishIntervalDate.getDayOfMonth() &&
+                startIntervalDate.getDayOfYear() == finishIntervalDate.getDayOfYear() &&
+                startIntervalDate.getDayOfYear() == LocalDateTime.now().getDayOfYear() &&
+                startIntervalDate.getDayOfMonth() == LocalDateTime.now().getDayOfMonth()
+        ){
+            if(dto.getEvent() != Event.PRESENCE_AT_WORK) {
+                employeeService.setAbsentedAtWorkEmployee(employee.getId());
+            }else if(dto.getEvent() == Event.PRESENCE_AT_WORK){
+                employeeService.setPresenceAtWorkEmployee(employee.getId());
+            }
         }
         CalendarCreateArgument argument = getCalendarCreateArgument(dto, employee, startIntervalDate, finishIntervalDate);
         return calendarService.createCalendar(argument);
