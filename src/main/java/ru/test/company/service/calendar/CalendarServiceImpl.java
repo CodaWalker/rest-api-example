@@ -11,6 +11,7 @@ import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class CalendarServiceImpl implements CalendarService{
 
 
     @Override
-    public LocalDateTime getLatestHolidayInCompany(UUID id) {
+    public LocalDate getLatestHolidayInCompany(UUID id) {
 //        List<Calendar> calendars = calendarRepository.getCalendars(id);
 //        for (Calendar c:calendars
 //             ) {
@@ -76,8 +77,8 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     @Override
-    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDateTime end, Event event) {
-        return calendarRepository.getCalendarByEmployeeIdAndEndIntervalDateAndEvent(id, end, event);
+    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
+        return calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
     }
 
 

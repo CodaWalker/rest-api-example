@@ -1,13 +1,17 @@
 package ru.test.company.api.calendar.dto.out;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -23,10 +27,12 @@ public class CalendarDto {
     private UUID id;
 
     @ApiModelProperty("Дата начала события")
-    private LocalDateTime startIntervalDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate startIntervalDate;
 
     @ApiModelProperty("Дата окончания события")
-    private LocalDateTime endIntervalDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate endIntervalDate;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ApiModelProperty("ИД сотрудника")

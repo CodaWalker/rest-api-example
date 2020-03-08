@@ -7,7 +7,9 @@ import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -31,10 +33,10 @@ public class Calendar extends BaseEntity {
     /** Первый рабочий день **/
     @Column(name = "FIRST_INTERVAL_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime startIntervalDate;
+    private LocalDate startIntervalDate;
 
     /** День увольнения **/
     @Column(name = "LAST_INTERVAL_DATE")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime endIntervalDate;
+    private LocalDate endIntervalDate;
 }

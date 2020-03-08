@@ -8,6 +8,7 @@ import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,7 @@ public interface CalendarService {
     Calendar getExisting(UUID calendarId);
     List<Calendar> getAll();
 
-    LocalDateTime getLatestHolidayInCompany(UUID id) ;
+    LocalDate getLatestHolidayInCompany(UUID id) ;
 
-    Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDateTime end,Event event);
+    Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDate end,Event event);
 }

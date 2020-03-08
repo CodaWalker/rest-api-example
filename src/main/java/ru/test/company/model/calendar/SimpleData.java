@@ -14,13 +14,13 @@ public class SimpleData {
     public String month;
     public String day;
 
-    public static LocalDateTime convertSimpleDataToLocalDateTime(SimpleData simpleData) throws ErrorCustom {
+    public static LocalDate convertSimpleDataToLocalDateTime(SimpleData simpleData) throws ErrorCustom {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
         String date = simpleData.day+" "+simpleData.month+" "+simpleData.year;
-        LocalDateTime localDateTime = null;
+        LocalDate localDateTime = null;
         try {
-            localDateTime = LocalDate.parse(date,dtf).atTime(0, 0, 0);
+            localDateTime = LocalDate.parse(date,dtf);
         }
         catch (DateTimeParseException e){
             e.getMessage();

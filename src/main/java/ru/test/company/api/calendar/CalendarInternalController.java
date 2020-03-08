@@ -12,6 +12,7 @@ import ru.test.company.error.ErrorCustom;
 import ru.test.company.service.calendar.CalendarService;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -50,7 +51,7 @@ public class CalendarInternalController {
 
     @ApiOperation("Получить дату последнего отпуска")
     @GetMapping("/report/get-latest-holiday/{id}")
-    public LocalDateTime getLatestHoliday(@PathVariable UUID id) {
+    public LocalDate getLatestHoliday(@PathVariable UUID id) {
         return calendarService.getLatestHolidayInCompany(id);
     }
 }

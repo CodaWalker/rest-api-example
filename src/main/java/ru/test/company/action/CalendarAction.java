@@ -14,7 +14,9 @@ import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.util.validator.Validator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Component
 public class CalendarAction {
@@ -41,8 +43,8 @@ public class CalendarAction {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }
 
-        LocalDateTime startIntervalDate = LocalDateTime.now();
-        LocalDateTime finishIntervalDate;
+        LocalDate startIntervalDate = LocalDate.now();
+        LocalDate finishIntervalDate;
         try {
            startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
            finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
@@ -54,7 +56,7 @@ public class CalendarAction {
         return getCalendar(dto, employee, startIntervalDate, finishIntervalDate);
     }
 
-    private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDateTime startIntervalDate, LocalDateTime finishIntervalDate) throws ErrorCustom {
+    private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
         if(startIntervalDate.getDayOfMonth() == finishIntervalDate.getDayOfMonth() &&
                 startIntervalDate.getDayOfYear() == finishIntervalDate.getDayOfYear() &&
                 startIntervalDate.getDayOfYear() == LocalDateTime.now().getDayOfYear() &&
@@ -67,17 +69,17 @@ public class CalendarAction {
             }
         }
 
-//        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate.minusDays(1), dto.getEvent());
-//          if(calendar != null){
-//              System.out.println("calendar: ");
-//              System.out.println(calendar.getId());
-//              System.out.println(calendar.getEmployee());
-//              System.out.println(calendar.getStartIntervalDate());
-//              System.out.println(calendar.getEndIntervalDate());
-//              System.out.println(calendar.getEvent());
-//          }else{
-//              System.out.println("null calendar");
-//          }
+        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
+          if(calendar != null){
+              System.out.println("calendar: ");
+              System.out.println(calendar.getId());
+              System.out.println(calendar.getEmployee());
+              System.out.println(calendar.getStartIntervalDate());
+              System.out.println(calendar.getEndIntervalDate());
+              System.out.println(calendar.getEvent());
+          }else{
+              System.out.println("null calendar");
+          }
 
             // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
 
@@ -85,7 +87,7 @@ public class CalendarAction {
         return calendarService.createCalendar(argument);
     }
 
-    private CalendarCreateArgument getCalendarCreateArgument(CalendarCreateDto dto, Employee employee, LocalDateTime startIntervalDate, LocalDateTime finishIntervalDate) {
+    private CalendarCreateArgument getCalendarCreateArgument(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) {
         return CalendarCreateArgument.builder()
                 .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
