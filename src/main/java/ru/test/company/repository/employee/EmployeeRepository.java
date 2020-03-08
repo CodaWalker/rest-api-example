@@ -14,6 +14,6 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
-    @Query(nativeQuery = true, countQuery = "SELECT COUNT(*) FROM Employee WHERE position_id = ? AND department_id = ?")
-    Integer countAllByPositionIdAndDepartmentId(UUID positionId,UUID departmentId);
+    @Query(nativeQuery = true, countQuery = "SELECT COUNT(*) FROM Employee WHERE position_id = ? AND department_id = ? AND presence_at_work = true")
+    Integer countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(UUID positionId,UUID departmentId);
 }

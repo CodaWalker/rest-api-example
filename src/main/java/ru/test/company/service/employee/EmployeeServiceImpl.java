@@ -126,7 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId) {
-        return employeeRepository.countAllByPositionIdAndDepartmentId(positionId, departmentId);
+        return employeeRepository.countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(positionId, departmentId);
     }
 
     @Override
