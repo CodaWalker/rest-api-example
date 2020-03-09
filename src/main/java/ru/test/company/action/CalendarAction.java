@@ -41,7 +41,7 @@ public class CalendarAction {
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
-        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_FIRED,true);
+        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_FIRED);
         Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
 
         if(employee.getLastWorkingDate() != null){
