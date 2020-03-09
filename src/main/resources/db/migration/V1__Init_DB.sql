@@ -3,7 +3,7 @@ create sequence hibernate_sequence start 1 increment 1;
 create table calendar (
     id varchar(36) not null,
     last_interval_date date,
-    event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
+    event VARCHAR(255) not null,
     first_interval_date date,
     employee_id varchar(36),
     primary key (id)
