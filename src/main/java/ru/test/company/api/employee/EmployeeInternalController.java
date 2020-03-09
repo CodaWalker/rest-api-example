@@ -100,4 +100,5 @@ public class EmployeeInternalController{
     public EmployeeDto setAbsented(@PathVariable UUID id) throws ErrorCustom {
         return employeeMapper.toDto(employeeService.setAbsentedAtWorkEmployee(id));
     }
+
 }

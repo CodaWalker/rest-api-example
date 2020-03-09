@@ -3,15 +3,11 @@ package ru.test.company.service.department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.test.company.api.department.dto.in.DepartmentCreateDto;
 import ru.test.company.model.department.Department;
-import ru.test.company.model.employee.Employee;
-import ru.test.company.model.employee.Event;
 import ru.test.company.repository.department.DepartmentRepository;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.department.argument.DepartmentUpdateArgument;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -78,5 +74,11 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
+    }
+
+    @Override
+    public Long getAllWorkingEmployeesThisDay(UUID id) {
+        return null;
+//        return departmentRepository.getCountAtWorkEmployeeInDepartment(id);
     }
 }

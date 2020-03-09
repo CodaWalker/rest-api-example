@@ -54,4 +54,10 @@ public class DepartmentInternalController {
         return departmentService.getCountDaysInCompany(id);
     }
 
+    @ApiOperation("Получить количество сотрудников, которые работают в отделе")
+    @GetMapping("/report/get-working-employees/{id}")
+    public Long getAllWorkingEmployees(@PathVariable UUID id) {
+        return departmentService.getAllWorkingEmployeesThisDay(id);
+    }
+
 }
