@@ -106,4 +106,10 @@ public class EmployeeInternalController{
     public Long getAllWorkingEmployees(@PathVariable UUID id) {
         return employeeService.getAllWorkingEmployeesThisDay(id);
     }
+
+    @ApiOperation("Получить количество сотрудников, которые в отпуске сегодня")
+    @GetMapping("/report/get-holiday-employees/{id}")
+    public Long getAllHolidayEmployees(@PathVariable UUID id) {
+        return employeeService.getAllHolidayThisDay(id);
+    }
 }

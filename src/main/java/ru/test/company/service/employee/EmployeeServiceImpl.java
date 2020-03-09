@@ -17,6 +17,7 @@ import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 import ru.test.company.util.validator.Validator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -134,6 +135,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Long getAllWorkingEmployeesThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentId(id);
+    }
+
+    @Override
+    public Long getAllHolidayThisDay(UUID id) {
+        return employeeRepository.countEmployeesByDepartmentIdAndNew(id, LocalDate.now(), LocalDate.now());
     }
 
     @Override

@@ -29,4 +29,6 @@ public interface EmployeeService {
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
 
     Long getAllWorkingEmployeesThisDay(UUID id);
+
+    Long getAllHolidayThisDay(UUID id);
 }

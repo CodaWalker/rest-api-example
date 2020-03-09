@@ -72,16 +72,12 @@ public class CalendarAction {
         final LocalDate startIntervalDate = dto.getStartIntervalDate();
         final LocalDate endIntervalDate = dto.getEndIntervalDate();
         atWorkEmployee(employee, startIntervalDate, endIntervalDate);
-
-
         CalendarUpdateArgument argument = CalendarUpdateArgument.builder()
                 .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(endIntervalDate)
                 .employee(employee)
                 .build();
-
-
         return calendarService.updateCalendar(id, argument);
     }
 
@@ -101,9 +97,7 @@ public class CalendarAction {
     }
 
     private void atWorkEmployee(Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        if(
-                startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now())
-        ){
+        if(startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now())){
                 employeeService.setAbsentedAtWorkEmployee(employee.getId());
         }
     }
