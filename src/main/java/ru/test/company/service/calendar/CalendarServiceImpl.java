@@ -72,8 +72,7 @@ public class CalendarServiceImpl implements CalendarService{
 
     @Override
     public List<Calendar> getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
-        List<Calendar> calendars = calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
-        return calendars;
+        return calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
     }
 
     @Override

@@ -78,8 +78,6 @@ public class CalendarAction {
         final LocalDate endIntervalDate = dto.getEndIntervalDate();
         atWorkEmployee(dto.getEvent(), employee, startIntervalDate, endIntervalDate);
 
-//        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
-        // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
 
         CalendarUpdateArgument argument = CalendarUpdateArgument.builder()
                 .event(dto.getEvent())
@@ -95,10 +93,8 @@ public class CalendarAction {
     private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
         atWorkEmployee(dto.getEvent(), employee, startIntervalDate, finishIntervalDate);
 
-
-
-
-            // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
+        //        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
+        // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
 
         CalendarCreateArgument argument = CalendarCreateArgument.builder()
                 .event(dto.getEvent())
