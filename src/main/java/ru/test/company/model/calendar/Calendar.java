@@ -26,7 +26,7 @@ public class Calendar extends BaseEntity {
 
     /** Событие связанное с пребыванием или отстутсвием сотрудника */
     @Builder.Default
-    @Column(name = "EVENT", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'ABSENTED_OTHER'")
+    @Column(name = "EVENT", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK'")
     @Enumerated(EnumType.STRING)
     private Event event;
 

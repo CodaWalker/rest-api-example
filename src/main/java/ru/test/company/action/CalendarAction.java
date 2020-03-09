@@ -44,8 +44,9 @@ public class CalendarAction {
         final boolean isNoDepartment = !employee.getDepartment().getName().equals("noDepartment");
         Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_NOT_FOUND);
         Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
-        Validator.validateByCondition(isNoDepartment,EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
-
+        if(!dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+           Validator.validateByCondition(isNoDepartment, EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
+        }
         if(employee.getPosition() != null && employee.getDepartment() != null && employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }
@@ -63,7 +64,11 @@ public class CalendarAction {
 
     public Calendar execute(UUID id, CalendarUpdateDto dto) throws ErrorCustom {
         UUID employeeId = dto.getEmployeeId();
+        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+            employeeService.setPresenceAtWorkEmployee(employeeId);
+        }else {
             employeeService.setAbsentedAtWorkEmployee(employeeId);
+        }
         Employee employee = employeeService.getExisting(employeeId);
         return getCalendar(id, dto, employee);
 
@@ -71,18 +76,22 @@ public class CalendarAction {
     private Calendar getCalendar(UUID id, CalendarUpdateDto dto, Employee employee) throws ErrorCustom {
         final LocalDate startIntervalDate = dto.getStartIntervalDate();
         final LocalDate endIntervalDate = dto.getEndIntervalDate();
-        atWorkEmployee(employee, startIntervalDate, endIntervalDate);
+        atWorkEmployee(dto.getEvent(), employee, startIntervalDate, endIntervalDate);
+
+
         CalendarUpdateArgument argument = CalendarUpdateArgument.builder()
                 .event(dto.getEvent())
                 .startIntervalDate(startIntervalDate)
                 .endIntervalDate(endIntervalDate)
                 .employee(employee)
                 .build();
+
+
         return calendarService.updateCalendar(id, argument);
     }
 
     private Calendar getCalendar(CalendarCreateDto dto, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        atWorkEmployee(employee, startIntervalDate, finishIntervalDate);
+        atWorkEmployee(dto.getEvent(), employee, startIntervalDate, finishIntervalDate);
 
         //        Calendar calendar = calendarService.getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), startIntervalDate, dto.getEvent());
         // Обновляем вчерашнюю запись если находим крайний интервал равным вчера
@@ -96,14 +105,23 @@ public class CalendarAction {
         return calendarService.createCalendar(argument);
     }
 
-    private void atWorkEmployee(Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        if(startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now())){
+    private void atWorkEmployee(Event event, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
+        if(    startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now()))
+        {
+            if(event != Event.PRESENCE_AT_WORK) {
                 employeeService.setAbsentedAtWorkEmployee(employee.getId());
+            }else {
+                employeeService.setPresenceAtWorkEmployee(employee.getId());
+            }
         }
     }
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
+        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
+            employeeService.setPresenceAtWorkEmployee(dto.getEmployeeId());
+        }else {
             employeeService.setAbsentedAtWorkEmployee(dto.getEmployeeId());
+        }
         return employeeService.getExisting(dto.getEmployeeId());
     }
 }
