@@ -131,6 +131,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Long getAllWorkingEmployeesThisDay(UUID id) {
+        return employeeRepository.countAllByDepartmentId(id);
+    }
+
+    @Override
     @Transactional
     public Employee deleteEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);

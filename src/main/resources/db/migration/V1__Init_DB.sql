@@ -1,11 +1,11 @@
 create sequence hibernate_sequence start 1 increment 1;
 
-create table calendar
-    (id varchar(36) not null,
+create table calendar (
+    id varchar(36) not null,
     last_interval_date date,
+    event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
     first_interval_date date,
-     event VARCHAR(255) DEFAULT 'PRESENCE_AT_WORK' not null,
-     employee_id varchar(36),
+    employee_id varchar(36),
     primary key (id)
 );
 create table department (
@@ -32,8 +32,8 @@ create table position (
     primary key (id)
 );
 alter table calendar
-    add constraint FKnmah044irgqhhna8e5gtak0ri foreign key (employee_id) references employee;
+    add constraint FKslt8252kcie1jrit02ltj7txk foreign key (employee_id) references employee;
 alter table employee
-    add constraint FK8if1byloc650qvkaxabyjveap foreign key (department_id) references department;
+    add constraint FKbejtwvg9bxus2mffsm3swj3u9 foreign key (department_id) references department;
 alter table employee
-    add constraint FKagakceqm38ji4lb8q3j6rj8ij foreign key (position_id) references position;
+    add constraint FKbc8rdko9o9n1ri9bpdyxv3x7i foreign key (position_id) references position;

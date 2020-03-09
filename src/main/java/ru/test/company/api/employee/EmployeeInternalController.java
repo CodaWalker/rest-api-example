@@ -101,4 +101,9 @@ public class EmployeeInternalController{
         return employeeMapper.toDto(employeeService.setAbsentedAtWorkEmployee(id));
     }
 
+    @ApiOperation("Получить количество сотрудников, которые работают в отделе")
+    @GetMapping("/report/get-working-employees/{id}")
+    public Long getAllWorkingEmployees(@PathVariable UUID id) {
+        return employeeService.getAllWorkingEmployeesThisDay(id);
+    }
 }

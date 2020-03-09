@@ -2,6 +2,7 @@ package ru.test.company.repository.calendar;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.test.company.model.calendar.Calendar;
 import ru.test.company.model.department.Department;
@@ -21,6 +22,5 @@ public interface CalendarRepository extends JpaRepository<Calendar, UUID> {
 
     @Query(nativeQuery = true, countQuery = "SELECT * FROM calendar WHERE employee_id = ? and event = ? ORDER BY last_interval_date DESC;")
     Calendar findTopCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(UUID employee_id, Event event);
-
 
 }

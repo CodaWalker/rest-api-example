@@ -7,6 +7,7 @@ import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.model.employee.Employee;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mapper
 public interface EmployeeMapper {

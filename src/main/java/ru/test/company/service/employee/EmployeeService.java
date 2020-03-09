@@ -27,4 +27,6 @@ public interface EmployeeService {
     Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom;
 
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
+
+    Long getAllWorkingEmployeesThisDay(UUID id);
 }
