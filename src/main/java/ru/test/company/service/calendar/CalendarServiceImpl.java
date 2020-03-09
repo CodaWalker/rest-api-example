@@ -13,8 +13,7 @@ import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CalendarServiceImpl implements CalendarService{
@@ -71,19 +70,28 @@ public class CalendarServiceImpl implements CalendarService{
 
 
     @Override
-    public List<Calendar> getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
-        return calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, Event.ABSENTED_HOLIDAY, end);
+    public Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id, LocalDate end, Event event) {
+        return calendarRepository.getCalendarByEmployeeIdAndEventAndEndIntervalDate(id, event, end);
     }
 
     @Override
     public LocalDate getCalendarByLastDateAndEvent(UUID id, Event event) throws ErrorCustom {
-        Calendar calendar = calendarRepository.findTopCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(id, event);
-        if(calendar != null){
-            return calendar.getEndIntervalDate();
+        Set<Calendar> calendars = calendarRepository.findCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(id, event);
+        Set<Calendar> sortedSet = new TreeSet<>(new Comparator<Calendar>() {
+            public int compare(Calendar o1, Calendar o2) {
+                return o2.getEndIntervalDate().compareTo(o1.getEndIntervalDate());
+            }
+        });
+        sortedSet.addAll(calendars);
+
+        if(calendars.size() != 0){
+            return  sortedSet.iterator().next().getEndIntervalDate();
         }
-            throw new ErrorCustom(6,"У сотрудника нет событий связанных с" + event.name());
+            throw new ErrorCustom(6,"У сотрудника нет событий связанных с " + event.name());
 
     }
+
+
 
 
 }

@@ -31,4 +31,7 @@ public interface EmployeeService {
     Long getAllWorkingEmployeesThisDay(UUID id);
 
     Long getAllHolidayThisDay(UUID id);
+    Long getAllMedicalThisDay(UUID id);
+    Long getAllAbsentedOtherThisDay(UUID id);
+    Long getAllWorkingThisDay(UUID id);
 }

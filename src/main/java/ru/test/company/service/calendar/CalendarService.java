@@ -21,7 +21,7 @@ public interface CalendarService {
     Calendar getExisting(UUID calendarId);
     List<Calendar> getAll();
 
-    List<Calendar> getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDate end,Event event);
+    Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDate end,Event event);
 
     LocalDate getCalendarByLastDateAndEvent(UUID id, Event event) throws ErrorCustom;
 }

@@ -132,6 +132,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(positionId, departmentId);
     }
 
+    //Необходимо заменить запросом ниже
     @Override
     public Long getAllWorkingEmployeesThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentId(id);
@@ -139,7 +140,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Long getAllHolidayThisDay(UUID id) {
-        return employeeRepository.countEmployeesByDepartmentIdAndNew(id, LocalDate.now(), LocalDate.now());
+        return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_HOLIDAY,LocalDate.now(), LocalDate.now());
+    }
+
+    @Override
+    public Long getAllMedicalThisDay(UUID id) {
+        return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_MEDICAL,LocalDate.now(), LocalDate.now());
+    }
+
+    @Override
+    public Long getAllAbsentedOtherThisDay(UUID id) {
+        return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_OTHER,LocalDate.now(), LocalDate.now());
+    }
+
+    @Override
+    public Long getAllWorkingThisDay(UUID id) {
+        return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.PRESENCE_AT_WORK,LocalDate.now(), LocalDate.now());
     }
 
     @Override

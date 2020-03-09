@@ -21,22 +21,24 @@ public class SimpleData {
 
     public static LocalDate convertSimpleDataToLocalDateTime(SimpleData simpleData) throws ErrorCustom {
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d MM yyyy");
-        String date = simpleData.day+" "+simpleData.month+" "+simpleData.year;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = simpleData.year+"-"+simpleData.month+"-"+simpleData.day;
         LocalDate localDateTime = null;
         try {
             localDateTime = LocalDate.parse(date,dtf);
         }
         catch (DateTimeParseException e){
             e.getMessage();
-            throw new ErrorCustom(4,"Не правильно введены значения даты! Формат: d MM yyyy ");
+            throw new ErrorCustom(4,"Не правильно введены значения даты! Формат: yyyy-MM-dd ");
         }
         return localDateTime;
     }
 
     public static SimpleData convertLocalDateTimeToSimpleData(LocalDate localDate) throws ErrorCustom {
         String month = String.valueOf(localDate.getMonthValue());
+        String day = String.valueOf(localDate.getDayOfMonth());
         if(month.length() < 2){month = "0"+month; }
+        if(day.length() < 2){day = "0"+day; }
         return SimpleData.builder()
                 .day(String.valueOf(localDate.getDayOfMonth()))
                 .month(month)
