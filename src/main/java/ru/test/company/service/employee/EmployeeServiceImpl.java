@@ -20,8 +20,7 @@ import ru.test.company.util.validator.Validator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -132,30 +131,45 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(positionId, departmentId);
     }
 
-    //Необходимо заменить запросом ниже
     @Override
-    public Long getAllWorkingEmployeesThisDay(UUID id) {
-        return employeeRepository.countAllByDepartmentId(id);
-    }
-
-    @Override
-    public Long getAllHolidayThisDay(UUID id) {
+    @Transactional
+    public Long getReportAllHolidayThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_HOLIDAY,LocalDate.now(), LocalDate.now());
     }
 
     @Override
-    public Long getAllMedicalThisDay(UUID id) {
+    @Transactional
+    public Long getReportAllMedicalThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_MEDICAL,LocalDate.now(), LocalDate.now());
     }
 
     @Override
-    public Long getAllAbsentedOtherThisDay(UUID id) {
+    @Transactional
+    public Long getReportAllAbsentedOtherThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_OTHER,LocalDate.now(), LocalDate.now());
     }
 
     @Override
-    public Long getAllWorkingThisDay(UUID id) {
+    @Transactional
+    public Long countAllByDepartmentId(UUID id) {
+        return employeeRepository.countAllByDepartmentId(id);
+    }
+
+    @Override
+    @Transactional
+    public Long getReportAllWorkingThisDay(UUID id) {
         return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.PRESENCE_AT_WORK,LocalDate.now(), LocalDate.now());
+    }
+
+    @Override
+    public Map<String, Long> getReportAll(UUID id) {
+        Map<String, Long> nums = new HashMap<>();
+        nums.put("all",countAllByDepartmentId(id));
+        nums.put("working",getReportAllWorkingThisDay(id));
+        nums.put("absented-holiday",getReportAllHolidayThisDay(id));
+        nums.put("absented-medical",getReportAllMedicalThisDay(id));
+        nums.put("absented-other",getReportAllAbsentedOtherThisDay(id));
+        return nums;
     }
 
     @Override

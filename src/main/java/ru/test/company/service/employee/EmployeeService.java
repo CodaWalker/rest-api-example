@@ -9,6 +9,7 @@ import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface EmployeeService {
@@ -28,10 +29,10 @@ public interface EmployeeService {
 
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
 
-    Long getAllWorkingEmployeesThisDay(UUID id);
-
-    Long getAllHolidayThisDay(UUID id);
-    Long getAllMedicalThisDay(UUID id);
-    Long getAllAbsentedOtherThisDay(UUID id);
-    Long getAllWorkingThisDay(UUID id);
+    Long getReportAllHolidayThisDay(UUID id);
+    Long getReportAllMedicalThisDay(UUID id);
+    Long getReportAllAbsentedOtherThisDay(UUID id);
+    Long getReportAllWorkingThisDay(UUID id);
+    Long countAllByDepartmentId(UUID id);
+    Map<String, Long> getReportAll(UUID id);
 }

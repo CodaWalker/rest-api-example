@@ -5,14 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 import ru.test.company.repository.calendar.CalendarRepository;
 import ru.test.company.service.calendar.argument.CalendarCreateArgument;
 import ru.test.company.service.calendar.argument.CalendarUpdateArgument;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -88,10 +86,17 @@ public class CalendarServiceImpl implements CalendarService{
             return  sortedSet.iterator().next().getEndIntervalDate();
         }
             throw new ErrorCustom(6,"У сотрудника нет событий связанных с " + event.name());
-
     }
 
+    @Override
+    public List<Calendar> getAllByEmployeeId(UUID id) {
+        return calendarRepository.getCalendarsByEmployee_Id(id);
+    }
 
+    @Override
+    public Long countWorkDaysAllByEmployeeId(UUID id) {
+        final List<Calendar> calendars = calendarRepository.getCalendarsByEmployee_IdAndEvent(id, Event.PRESENCE_AT_WORK);
 
-
+        return 1L;
+    }
 }

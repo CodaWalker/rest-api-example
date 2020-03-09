@@ -40,6 +40,18 @@ public class CalendarInternalController {
         return calendarMapper.toDtoListFromDB(calendarService.getAll());
     }
 
+    @ApiOperation("Получить список записей календаря")
+    @GetMapping(value = "/get/{id}")
+    public List<CalendarDto> getOne(@PathVariable UUID id) {
+        return calendarMapper.toDtoListFromDB(calendarService.getAllByEmployeeId(id));
+    }
+
+    @ApiOperation("Получить количество рабочих дней сотрудника")
+    @GetMapping(value = "/report/get-all-count-working-day/{id}")
+    public Long countWorkingDay(@PathVariable UUID id) {
+        return null;
+    }
+
 
     @ApiOperation("Создать календарь")
     @PutMapping("/create")

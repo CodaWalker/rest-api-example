@@ -18,11 +18,10 @@ import java.util.UUID;
 public interface CalendarRepository extends JpaRepository<Calendar, UUID> {
     List<Calendar> getCalendarsByEmployee_Id(UUID uuid);
 
+    List<Calendar> getCalendarsByEmployee_IdAndEvent(UUID employee_id, Event event);
+
     @Query("SELECT c FROM Calendar c WHERE c.employee.id = :eId AND c.event = :event and c.endIntervalDate = :end")
     Calendar getCalendarByEmployeeIdAndEventAndEndIntervalDate(@Param("eId") UUID employee_id,@Param("event")  Event event,@Param("end")  LocalDate endIntervalDate);
-
-//    @Query("SELECT c FROM Calendar c WHERE c.employee.id = :eId AND c.event = :event ORDER BY c.endIntervalDate  DESC ")
-//    Calendar getCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(@Param("eId") UUID employee_id, @Param("event") Event event);
 
     Set<Calendar> findCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(UUID employee_id, Event event);
 }
