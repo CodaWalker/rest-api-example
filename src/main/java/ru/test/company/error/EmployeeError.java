@@ -13,6 +13,7 @@ public class EmployeeError {
     public static final String EMPLOYEE_NOT_FOUND = "Сотрудник не найден";
     public static final String EMPLOYEE_FIRED = "Сотрудник уволен ранее";
     public static final String EMPLOYEE_NOT_FIRED = "Сотрудник еще не уволен";
+    public static final String EMPLOYEE_NOT_IN_DEPARTMENT = "У сотрудника не установлен отдел";
 
 
 }

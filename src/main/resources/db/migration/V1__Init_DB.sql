@@ -10,17 +10,17 @@ create table calendar (
 );
 create table department (
     id varchar(36) not null,
-    first_working_date timestamp,
-    last_working_date timestamp,
+    first_working_date date,
+    last_working_date date,
     name varchar(255),
     primary key (id)
 );
 create table employee (
     id varchar(36) not null,
     first_name varchar(255),
-    first_working_date timestamp,
+    first_working_date date,
     last_name varchar(255),
-    last_working_date timestamp,
+    last_working_date date,
     presence_at_work boolean,
     department_id varchar(36),
     position_id varchar(36),

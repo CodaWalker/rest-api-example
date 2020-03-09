@@ -41,16 +41,11 @@ public class CalendarAction {
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
-        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_FIRED);
+        final boolean isNoDepartment = !employee.getDepartment().getName().equals("noDepartment");
+        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_NOT_FOUND);
         Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
+        Validator.validateByCondition(isNoDepartment,EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
 
-        if(employee.getLastWorkingDate() != null){
-//            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
-            throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
-        }
-        if(employee.getDepartment().getName().equals("noDepartment")) {
-            throw new ErrorCustom(5,"У сотрудника не установлен отдел");
-        }
         if(employee.getPosition() != null && employee.getDepartment() != null && employeeService.getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(),employee.getDepartment().getId()) < 2) {
             throw new ErrorCustom(6,"В данном отделе нет больше сотрудников одной должности");
         }

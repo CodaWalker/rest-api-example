@@ -33,7 +33,6 @@ public class Validator {
         }
     }
 
-
     /** Валидация по условию */
     public static void validateByCondition(boolean condition, String error) {
         if (!condition) throw new IllegalArgumentException(error);
