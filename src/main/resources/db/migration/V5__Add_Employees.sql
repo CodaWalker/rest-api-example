@@ -3,16 +3,20 @@ insert into employee (department_id, first_name, first_working_date, last_name, 
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
     values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7b', 'Maria', now() , 'Ivseeva', null, null, true, '415440a2-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Nurlan', now() , 'Bashirov', null, null, true, '415440a3-80d4-4050-a838-0bae446e98f9');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Nurlan', '2019-11-11' , 'Bashirov', null, null, true, '415440a3-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Alexandr', now() , 'Pushkin', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, '415440a5-80d4-4050-a838-0bae446e98f9');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Alexandr', '2018-12-05' , 'Pushkin', '2020-03-08', 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', false, '415440a5-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7c', 'Viktor', now() , 'Ryaznik', null, '789df7d0-7130-4af7-82ce-e8d00e0369d9', true, '415440a6-80d4-4050-a838-0bae446e98f9');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7c', 'Viktor', '2020-01-12' , 'Ryaznik', null, '789df7d0-7130-4af7-82ce-e8d00e0369d9', true, '415440a6-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7c', 'Fedor', now() , 'Robov', null, '32089d54-7f7a-4190-9334-593193765c4c', true, '415440a7-80d4-4050-a838-0bae446e98f9');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7c', 'Fedor', '2017-11-21' , 'Robov', null, '32089d54-7f7a-4190-9334-593193765c4c', true, '415440a7-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7d', 'Grigory', now() , 'Rasputin', null, null, true, '415440a8-80d4-4050-a838-0bae446e98f9');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7d', 'Grigory', '2019-11-01' , 'Rasputin', null, null, true, '415440a8-80d4-4050-a838-0bae446e98f9');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Semen', now() , 'Sokov', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, '60820c65-c952-4027-9a29-2adc98d58f39');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Semen', '2020-02-02' , 'Sokov', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, '60820c65-c952-4027-9a29-2adc98d58f39');
 insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
-    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Dmitry', now() , 'Laptev', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, 'e6468c88-f4bb-44e9-9e74-f376b00c868b');
+    values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Dmitry', '2019-10-01' , 'Laptev', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, 'e6468c88-f4bb-44e9-9e74-f376b00c868b');
+insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
+values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Zahar', '2020-03-01' , 'Dudev', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, '9023c58b-9f27-4da0-aac5-b65096053c34');
+insert into employee (department_id, first_name, first_working_date, last_name, last_working_date, position_id, presence_at_work, id)
+values ('8c3e2dc2-a789-4135-b0b3-b1176229ce7e', 'Denis', '2019-10-01' , 'Ermakov', null, 'de7c9c82-2ec7-4616-9f29-de72fb0a865b', true, 'fa30713c-fdd3-4b81-86c4-bb3e04fc3500');
