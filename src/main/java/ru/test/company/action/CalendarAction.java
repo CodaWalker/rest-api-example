@@ -49,38 +49,24 @@ public class CalendarAction {
 
         Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_NOT_FOUND);
         Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
-
         if(!dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
            Validator.validateByCondition(isNoDepartment, EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
            Validator.validateByCondition(isOtherEmpThisPosition, EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
         }
-         Calendar calendar = calendarService
-                 .getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate()).minusDays(1), dto.getEvent());
-         if(calendar == null){
-                    calendar = calendarService
-                    .getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate()).plusDays(1), dto.getEvent());
-         }
-         if(calendar == null){
-            calendar = calendarService
-                    .getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employee.getId(), SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate()), dto.getEvent());
-        }
-
-        // Текущий вариант: когда пристутсвует запись в которой есть дата конца раньше на один день, тогда происходит обьединиение
         LocalDate startIntervalDate = LocalDate.now();
-        LocalDate finishIntervalDate = LocalDate.now();
+        LocalDate finishIntervalDate;
         try {
-           startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
-           finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
+            startIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getStartIntervalDate());
+            finishIntervalDate = SimpleData.convertSimpleDataToLocalDateTime(dto.getEndIntervalDate());
         }catch (ErrorCustom e){
-            if(calendar != null){
-                return getCalendar(calendar.getId(),dto.getEvent(),employee,calendar.getStartIntervalDate(),finishIntervalDate);
-            }
             return getCalendar(dto.getEvent(), employee, startIntervalDate, startIntervalDate);
         }
-        if(calendar != null){
-            return getCalendar(calendar.getId(),dto.getEvent(),employee,calendar.getStartIntervalDate(),finishIntervalDate);
-        }
         return getCalendar(dto.getEvent(), employee, startIntervalDate, finishIntervalDate);
+    }
+
+    private Calendar getCalendarByInterval(UUID employeeId, SimpleData end, Event event, int day) throws ErrorCustom {
+        return calendarService
+                .getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employeeId, SimpleData.convertSimpleDataToLocalDateTime(end).plusDays(day), event);
     }
 
 
