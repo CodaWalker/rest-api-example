@@ -21,9 +21,14 @@ public class Validator {
     }
 
     /** Проверка на null */
-    public static void validateObjectParam(Object param, String error) {
-        if (param == null) throw new IllegalArgumentException(error);
+    public static void validateObjectParam(Object param, String error,Boolean f) {
+        if(f){
+            if (param == null) throw new IllegalArgumentException(error);
+        }else{
+            if (param != null) throw new IllegalArgumentException(error);
+        }
     }
+
 
     /** Валидация по условию */
     public static void validateByCondition(boolean condition, String error) {

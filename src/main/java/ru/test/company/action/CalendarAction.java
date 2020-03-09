@@ -6,6 +6,7 @@ import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.api.calendar.dto.in.CalendarSearchDto;
 import ru.test.company.api.calendar.dto.in.CalendarUpdateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
+import ru.test.company.error.EmployeeError;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.BaseEntity;
 import ru.test.company.model.calendar.Calendar;
@@ -40,6 +41,9 @@ public class CalendarAction {
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
+        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_FIRED,true);
+        Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
+
         if(employee.getLastWorkingDate() != null){
 //            Validator.validateObjectParam(employee.getLastWorkingDate(),Error);
             throw new ErrorCustom(1,"Этот сотрудник уволен ранее");

@@ -28,9 +28,9 @@ public class EmployeeCreateArgument {
     public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, Department department, Position position) {
         this.position = position;
 
-        Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
-        Validator.validateObjectParam(lastName, EmployeeError.EMPLOYEE_LAST_NAME_IS_MANDATORY);
-        Validator.validateObjectParam(department, EmployeeError.EMPLOYEE_DEPARTMENT_ID_IS_MANDATORY);
+        Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY,true);
+        Validator.validateObjectParam(lastName, EmployeeError.EMPLOYEE_LAST_NAME_IS_MANDATORY,true);
+        Validator.validateObjectParam(department, EmployeeError.EMPLOYEE_DEPARTMENT_ID_IS_MANDATORY,true);
 
         this.firstName = firstName;
         this.lastName = lastName;
