@@ -17,10 +17,10 @@ import java.util.UUID;
 public interface CalendarRepository extends JpaRepository<Calendar, UUID> {
     List<Calendar> getCalendarsByEmployee_Id(UUID uuid);
 
-    @Query(nativeQuery = true, countQuery = "SELECT * FROM calendar WHERE employee_id = ? and event = ? and last_interval_date = ?")
-    Calendar getCalendarByEmployeeIdAndEventAndEndIntervalDate(UUID employee_id, Event event, LocalDate endIntervalDate);
+    @Query(countQuery = "SELECT c FROM Calendar c WHERE c.employee.id = :eId AND c.event = :event and c.endIntervalDate = :end")
+    Calendar getCalendarByEmployeeIdAndEventAndEndIntervalDate(@Param("eId") UUID employee_id,@Param("event")  Event event,@Param("end")  LocalDate endIntervalDate);
 
-    @Query(nativeQuery = true, countQuery = "SELECT * FROM calendar WHERE employee_id = ? and event = ? ORDER BY last_interval_date DESC;")
+    @Query(countQuery = "SELECT c FROM Calendar c WHERE c.employee.id = :eId AND c.event = :event ORDER BY c.endIntervalDate  DESC")
     Calendar findTopCalendarByEmployeeIdAndEventOrderByEndIntervalDateDesc(UUID employee_id, Event event);
 
 }
