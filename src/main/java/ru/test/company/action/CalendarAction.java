@@ -101,10 +101,8 @@ public class CalendarAction {
     }
 
     private void atWorkEmployee(Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        if(startIntervalDate.getDayOfMonth() == finishIntervalDate.getDayOfMonth() &&
-                startIntervalDate.getDayOfYear() == finishIntervalDate.getDayOfYear() &&
-                startIntervalDate.getDayOfYear() == LocalDateTime.now().getDayOfYear() &&
-                startIntervalDate.getDayOfMonth() == LocalDateTime.now().getDayOfMonth()
+        if(
+                startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now())
         ){
                 employeeService.setAbsentedAtWorkEmployee(employee.getId());
         }
