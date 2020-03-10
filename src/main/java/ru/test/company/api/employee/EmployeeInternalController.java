@@ -119,14 +119,7 @@ public class EmployeeInternalController{
     @ApiOperation("Получить общий отчет по пристутствию сотрудников в отделе на сегодня")
     @GetMapping("/report/get-count-all-employees/{id}")
     public DepartmentReportDto getCountAllEmployees(@PathVariable UUID id) {
-        final Map<String, Long> reportAll = employeeService.getReportAll(id);
-       return DepartmentReportDto.builder()
-                .countAllEmployees(reportAll.get("all"))
-                .countAllWorkingEmployees(reportAll.get("working"))
-                .countMedicalAbsentedEmployees(reportAll.get("absented-medical"))
-                .countHolidayAbsentedEmployees(reportAll.get("absented-holiday"))
-                .countOtherAbsentedEmployees(reportAll.get("absented-other"))
-                .build();
+       return employeeService.getReportAll(id);
     }
 }
 

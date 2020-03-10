@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
+import ru.test.company.api.employee.dto.out.DepartmentReportDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.department.Department;
@@ -148,14 +149,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<String, Long> getReportAll(UUID id) {
-        Map<String, Long> nums = new HashMap<>();
-        nums.put("all",countAllByDepartmentId(id));
-        nums.put("working",getReportAllWorkingThisDay(id));
-        nums.put("absented-holiday",getReportAllHolidayThisDay(id));
-        nums.put("absented-medical",getReportAllMedicalThisDay(id));
-        nums.put("absented-other",getReportAllAbsentedOtherThisDay(id));
-        return nums;
+    public DepartmentReportDto getReportAll(UUID id) {
+        return DepartmentReportDto.builder()
+                .countAllEmployees(countAllByDepartmentId(id))
+                .countAllWorkingEmployees(getReportAllWorkingThisDay(id))
+                .countMedicalAbsentedEmployees(getReportAllMedicalThisDay(id))
+                .countHolidayAbsentedEmployees(getReportAllHolidayThisDay(id))
+                .countOtherAbsentedEmployees(getReportAllAbsentedOtherThisDay(id))
+                .build();
     }
 
     @Override

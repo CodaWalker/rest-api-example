@@ -1,6 +1,7 @@
 package ru.test.company.service.employee;
 
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
+import ru.test.company.api.employee.dto.out.DepartmentReportDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
@@ -32,5 +33,5 @@ public interface EmployeeService {
     Long getReportAllAbsentedOtherThisDay(UUID id);
     Long getReportAllWorkingThisDay(UUID id);
     Long countAllByDepartmentId(UUID id);
-    Map<String, Long> getReportAll(UUID id);
+    DepartmentReportDto getReportAll(UUID id);
 }
