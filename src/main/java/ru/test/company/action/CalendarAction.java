@@ -43,7 +43,7 @@ public class CalendarAction {
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
 
-        final boolean isNoDepartment = !employee.getDepartment().getName().equals("noDepartment");
+        final boolean isNoDepartment = employee.getDepartment() == null;
         final boolean isOtherEmpThisPosition = employee.getPosition() != null && employee.getDepartment() != null && employeeService
                 .getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(), employee.getDepartment().getId()) < 2;
 
@@ -64,6 +64,7 @@ public class CalendarAction {
         return getCalendar(dto.getEvent(), employee, startIntervalDate, finishIntervalDate);
     }
 
+    // метод который работает с интервалами. Необходим для проверки и слития записией в календаре
     private Calendar getCalendarByInterval(UUID employeeId, SimpleData end, Event event, int day) throws ErrorCustom {
         return calendarService
                 .getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(employeeId, SimpleData.convertSimpleDataToLocalDateTime(end).plusDays(day), event);
@@ -95,8 +96,6 @@ public class CalendarAction {
                 .build();
         return calendarService.createCalendar(argument);
     }
-
-
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
         return employeeService.getExisting(dto.getEmployeeId());

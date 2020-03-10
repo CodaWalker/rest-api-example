@@ -28,7 +28,7 @@ public class EmployeeCreateArgument {
 
         Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
         Validator.validateObjectParam(lastName, EmployeeError.EMPLOYEE_LAST_NAME_IS_MANDATORY);
-        Validator.validateObjectParam(department, EmployeeError.EMPLOYEE_DEPARTMENT_ID_IS_MANDATORY);
+//        Validator.validateObjectParam(department, EmployeeError.EMPLOYEE_DEPARTMENT_ID_IS_MANDATORY);
 
         this.firstName = firstName;
         this.lastName = lastName;
