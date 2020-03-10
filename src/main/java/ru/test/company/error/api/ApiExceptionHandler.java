@@ -47,7 +47,7 @@ public class ApiExceptionHandler  {
             return new ErrorDTO(400, "Не правильно введены значения даты! Формат: yyyy-MM-dd ");
         }else
         if(e.getCode() == 5) {
-            return new ErrorDTO(400, "Некорректный формат одного из параметров запроса");
+            return new ErrorDTO(400, "Неизвестная ошибка");
         }else
         if(e.getCode() == 6) {
             return new ErrorDTO(400, "У сотрудника нет событий");
