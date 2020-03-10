@@ -75,10 +75,4 @@ public class DepartmentServiceImpl implements DepartmentService {
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
     }
-
-    @Override
-    public Long getAllWorkingEmployeesThisDay(UUID id) {
-        return null;
-//        return departmentRepository.getCountAtWorkEmployeeInDepartment(id);
-    }
 }

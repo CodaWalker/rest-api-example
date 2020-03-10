@@ -17,8 +17,5 @@ public interface DepartmentService {
     Department getExisting(UUID departmentId);
     List<Department> getAll();
     Department getByName(String department_name);
-
     Long getCountDaysInCompany(UUID id);
-
-    Long getAllWorkingEmployeesThisDay(UUID id);
 }

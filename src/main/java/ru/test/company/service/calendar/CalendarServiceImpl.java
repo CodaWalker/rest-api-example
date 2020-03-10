@@ -93,10 +93,4 @@ public class CalendarServiceImpl implements CalendarService{
         return calendarRepository.getCalendarsByEmployee_Id(id);
     }
 
-    @Override
-    public Long countWorkDaysAllByEmployeeId(UUID id) {
-        final List<Calendar> calendars = calendarRepository.getCalendarsByEmployee_IdAndEvent(id, Event.PRESENCE_AT_WORK);
-
-        return 1L;
-    }
 }

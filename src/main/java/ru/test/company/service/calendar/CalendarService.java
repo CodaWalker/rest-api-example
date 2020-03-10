@@ -26,6 +26,4 @@ public interface CalendarService {
     LocalDate getCalendarByLastDateAndEvent(UUID id, Event event) throws ErrorCustom;
 
     List<Calendar> getAllByEmployeeId(UUID id);
-
-    Long countWorkDaysAllByEmployeeId(UUID id);
 }
