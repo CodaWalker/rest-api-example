@@ -116,7 +116,7 @@ public class EmployeeInternalController{
 //        return employeeService.getReportAllAbsentedOtherThisDay(id);
 //    }
 
-    @ApiOperation("Получить общий отчет по пристутствию сотрудников в отделе на сегодня")
+    @ApiOperation("Получить общий отчет по пристутствию сотрудников в отделе на сегодня. Не забывайте отмечать сотрудников в Календаре!")
     @GetMapping("/report/get-count-all-employees/{id}")
     public DepartmentReportDto getCountAllEmployees(@PathVariable UUID id) {
        return employeeService.getReportAll(id);
