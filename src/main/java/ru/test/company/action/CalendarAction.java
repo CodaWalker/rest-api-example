@@ -33,16 +33,21 @@ public class CalendarAction {
 
     public  Calendar execute(CalendarCreateDto dto) throws ErrorCustom {
         Employee employee = getEmployee(dto);
-
-        final boolean isNoDepartment = employee.getDepartment() == null;
+        if(employee == null) {
+            throw new ErrorCustom(3, "Не найден сотрудник");
+        }
         final boolean isOtherEmpThisPosition = employee.getPosition() != null && employee.getDepartment() != null && employeeService
                 .getByEmployeesByEmployeeIdAndPositionId(employee.getPosition().getId(), employee.getDepartment().getId()) < 2;
-
-        Validator.validateObjectParam(employee, EmployeeError.EMPLOYEE_NOT_FOUND);
-        Validator.validateObjectParam(employee.getLastWorkingDate(), EmployeeError.EMPLOYEE_FIRED,false);
+        if(employee.getLastWorkingDate() != null) {
+            throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
+        }
         if(!dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
-           Validator.validateByCondition(isNoDepartment, EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
-           Validator.validateByCondition(isOtherEmpThisPosition, EmployeeError.EMPLOYEE_NOT_IN_DEPARTMENT);
+            if(employee.getDepartment() == null){
+                throw new ErrorCustom(5,"У сотрудника не установлен отдел");
+            }
+            if(isOtherEmpThisPosition){
+                throw new ErrorCustom(7,"В данном отделе нет больше сотрудников одной должности");
+            }
         }
         LocalDate startIntervalDate = LocalDate.now();
         LocalDate finishIntervalDate;

@@ -44,9 +44,11 @@ public class ApiExceptionHandler  {
             case 4:
                 return new ErrorDTO(400, "Не правильно введены значения даты! Формат: yyyy-MM-dd ");
             case 5:
-                return new ErrorDTO(400, "Неизвестная ошибка ");
+                return new ErrorDTO(400, "У сотрудника не установлен отдел");
             case 6:
                 return new ErrorDTO(400, "У сотрудника нет событий");
+            case 7:
+                return new ErrorDTO(400, "В данном отделе нет больше сотрудников одной должности");
             default:
                 return new ErrorDTO(400, "Неизвестная ошибка");
         }
