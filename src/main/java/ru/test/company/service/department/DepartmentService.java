@@ -1,9 +1,6 @@
 package ru.test.company.service.department;
 
-import org.springframework.stereotype.Service;
-import ru.test.company.api.department.dto.out.DepartmentDto;
 import ru.test.company.model.department.Department;
-import ru.test.company.model.employee.Employee;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.department.argument.DepartmentUpdateArgument;
 

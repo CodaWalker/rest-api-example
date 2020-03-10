@@ -35,9 +35,6 @@ public class EmployeeAction {
         Position position = getPosition(dto.getPosition_name());
 
         Department department = getDepartment(dto.getDepartment_name());
-//        if(department == null){
-//            department = departmentService.getByName("noDepartment");
-//        }
         EmployeeCreateArgument argument = getEmployeeCreateArgument(dto, department, position);
         return employeeService.createEmployee(argument);
     }
@@ -58,9 +55,6 @@ public class EmployeeAction {
     public Employee execute(UUID id, EmployeeUpdateDto dto) throws ErrorCustom {
         Position position = getPosition(dto.getPosition_name());
         Department department = getDepartment(dto.getDepartment_name());
-//        if(department == null){
-//            department = departmentService.getByName("noDepartment");
-//        }
         EmployeeUpdateArgument argument = getEmployeeUpdateArgument(dto, department, position);
         return employeeService.updateEmployee(id,argument);
     }

@@ -23,11 +23,8 @@ public interface EmployeeService {
     Employee dismissEmployee(UUID uuid) throws ErrorCustom;
     Employee deleteEmployee(UUID uuid) throws ErrorCustom;
     Long getCountDaysInCompany(UUID uuid);
-
     Long getCountWorkDaysInCompany(UUID uuid);
-
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
-
     Long getReportAllHolidayThisDay(UUID id);
     Long getReportAllMedicalThisDay(UUID id);
     Long getReportAllAbsentedOtherThisDay(UUID id);

@@ -9,7 +9,6 @@ import lombok.Setter;
 import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 /** ДТО поиска календаря */

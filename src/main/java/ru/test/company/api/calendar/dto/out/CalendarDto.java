@@ -6,12 +6,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 /**

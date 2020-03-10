@@ -23,5 +23,4 @@ public class EmployeeSearchArgument {
     private final Department department;
     private final Position position;
 
-
 }

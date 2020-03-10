@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import ru.test.company.model.employee.Event;
-
-import java.util.UUID;
 
 /** ДТО создания сотрудника */
 @Getter

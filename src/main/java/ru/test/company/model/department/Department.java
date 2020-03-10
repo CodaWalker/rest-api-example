@@ -4,9 +4,11 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.test.company.model.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter

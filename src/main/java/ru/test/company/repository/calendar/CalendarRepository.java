@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.test.company.model.calendar.Calendar;
-import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Event;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;

@@ -8,7 +8,6 @@ import ru.test.company.action.CalendarAction;
 import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.api.calendar.dto.out.CalendarDto;
 import ru.test.company.api.calendar.mapper.CalendarMapper;
-import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;

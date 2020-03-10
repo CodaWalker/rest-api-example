@@ -4,24 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
-import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
 import ru.test.company.api.employee.dto.out.DepartmentReportDto;
-import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.error.ErrorCustom;
-import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
 import ru.test.company.repository.employee.EmployeeRepository;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
-import ru.test.company.util.validator.Validator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -189,8 +185,5 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Long getCountWorkDaysInCompany(UUID uuid) {
         return null;
     }
-
-
-
 
 }

@@ -4,13 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.position.dto.in.PositionCreateDto;
 import ru.test.company.api.position.dto.out.PositionDto;
 import ru.test.company.api.position.mapper.PositionMapper;
-import ru.test.company.model.department.Department;
-import ru.test.company.model.position.Position;
-import ru.test.company.service.department.argument.DepartmentCreateArgument;
 import ru.test.company.service.position.PositionService;
 import ru.test.company.service.position.argument.PositionCreateArgument;
 

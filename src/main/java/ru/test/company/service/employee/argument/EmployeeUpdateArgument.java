@@ -1,6 +1,8 @@
 package ru.test.company.service.employee.argument;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import ru.test.company.model.department.Department;
 import ru.test.company.model.position.Position;
 
@@ -23,10 +25,10 @@ public class EmployeeUpdateArgument {
 
     public EmployeeUpdateArgument(UUID uuid, String firstName, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Department department, Position position) {
 
-
 //        Validator.validateObjectParam(userId, TicketError.TICKET_USER_ID_IS_MANDATORY);
 //        Validator.validateObjectParam(name, TicketError.TICKET_NAME_IS_MANDATORY);
 //        Validator.validateObjectParam(description, TicketError.TICKET_DESCRIPTION_IS_MANDATORY);
+
         this.uuid = uuid;
         this.firstName = firstName;
         this.lastName = lastName;

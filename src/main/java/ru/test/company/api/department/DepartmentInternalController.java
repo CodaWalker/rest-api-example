@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.test.company.api.department.dto.in.DepartmentCreateDto;
 import ru.test.company.api.department.dto.out.DepartmentDto;
 import ru.test.company.api.department.mapper.DepartmentMapper;
-import ru.test.company.api.employee.dto.out.EmployeeDto;
-import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;

@@ -10,6 +10,5 @@ public interface PositionService {
     Position createPosition(PositionCreateArgument positionCreateArgument);
     List<Position> getAll();
     Position getByName(String name);
-
     Position getExisting(UUID id);
 }
