@@ -24,14 +24,6 @@ public class Validator {
     public static void validateObjectParam(Object param, String error) {
             if (param == null) throw new IllegalArgumentException(error);
     }
-    /** Проверка на null с присутсивем и отсутсвием*/
-    public static void validateObjectParam(Object param, String error,Boolean f) {
-        if(f){
-            if (param == null) throw new IllegalArgumentException(error);
-        }else{
-            if (param != null) throw new IllegalArgumentException(error);
-        }
-    }
 
     /** Валидация по условию */
     public static void validateByCondition(boolean condition, String error) {

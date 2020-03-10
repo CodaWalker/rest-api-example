@@ -128,7 +128,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public Long getReportAllAbsentedOtherThisDay(UUID id) {
-        return employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_OTHER,LocalDate.now(), LocalDate.now());
+        final Long otherEventThisDay = employeeRepository.countAllByDepartmentIdIncludeInterval(id, Event.ABSENTED_OTHER, LocalDate.now(), LocalDate.now());
+
+        long eventsThisDay = getReportAllWorkingThisDay(id) +
+                getReportAllMedicalThisDay(id) +
+                getReportAllHolidayThisDay(id) +
+                otherEventThisDay;
+
+        if(countAllByDepartmentId(id) > eventsThisDay){
+            return otherEventThisDay + ( countAllByDepartmentId(id) - eventsThisDay);
+        }
+        return otherEventThisDay;
     }
 
     @Override
@@ -152,6 +162,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .countHolidayAbsentedEmployees(getReportAllHolidayThisDay(id))
                 .countOtherAbsentedEmployees(getReportAllAbsentedOtherThisDay(id))
                 .build();
+
     }
 
     @Override
