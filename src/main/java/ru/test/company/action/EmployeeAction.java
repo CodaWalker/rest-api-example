@@ -34,7 +34,7 @@ public class EmployeeAction {
         this.calendarService = calendarService;
     }
 
-    public Employee execute(EmployeeCreateDto dto) throws ErrorCustom {
+    public Employee execute(EmployeeCreateDto dto) {
         Position position = getPosition(dto.getPosition_name());
 
         Department department = getDepartment(dto.getDepartment_name());
@@ -55,7 +55,7 @@ public class EmployeeAction {
                     .build();
     }
 
-    public Employee execute(UUID id, EmployeeUpdateDto dto) throws ErrorCustom {
+    public Employee execute(UUID id, EmployeeUpdateDto dto) {
         Position position = getPosition(dto.getPosition_name());
         Department department = getDepartment(dto.getDepartment_name());
         EmployeeUpdateArgument argument = getEmployeeUpdateArgument(dto, department, position);

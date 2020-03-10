@@ -36,23 +36,23 @@ public class ApiExceptionHandler  {
     public ErrorDTO parameterBindCustomException(ErrorCustom e) {
         switch (e.getCode()) {
             case 1:
-                return new ErrorDTO(400, "Этот сотрудник уволен ранее");
+                return new ErrorDTO(2001, e.getMessage());
             case 2:
-                return new ErrorDTO(400, "Этот сотрудник не уволен, необходимо предварительно его уволить");
+                return new ErrorDTO(2002, e.getMessage());
             case 3:
-                return new ErrorDTO(400, "Не найден сотрудник");
+                return new ErrorDTO(2003, e.getMessage());
             case 4:
-                return new ErrorDTO(400, "Не правильно введены значения даты! Формат: yyyy-MM-dd ");
+                return new ErrorDTO(2004, e.getMessage());
             case 5:
-                return new ErrorDTO(400, "У сотрудника не установлен отдел");
+                return new ErrorDTO(2005, e.getMessage());
             case 6:
-                return new ErrorDTO(400, "У сотрудника нет событий");
+                return new ErrorDTO(2006, e.getMessage());
             case 7:
-                return new ErrorDTO(400, "В данном отделе нет больше сотрудников одной должности");
+                return new ErrorDTO(2007, e.getMessage());
             case 8:
-                return new ErrorDTO(400, "Не получилось удалить все календарные записи");
+                return new ErrorDTO(2008, e.getMessage());
             default:
-                return new ErrorDTO(400, "Неизвестная ошибка");
+                return new ErrorDTO(2000, e.getMessage());
         }
     }
 
