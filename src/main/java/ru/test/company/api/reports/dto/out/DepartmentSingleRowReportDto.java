@@ -11,7 +11,7 @@ import ru.test.company.model.employee.Event;
 import java.util.Map;
 
 /**
- * Полная ДТО для сущности "Отчет посещаемости отдела"
+ * Полная ДТО для сущности "Отчет посещаемости отдела по одному полю"
  * */
 
 @Getter
@@ -21,7 +21,7 @@ import java.util.Map;
 @ApiModel("Отдельный очет по одному событию")
 public class DepartmentSingleRowReportDto {
 
-    @ApiModelProperty("События")
+    @ApiModelProperty("Событие")
     private Event event;
 
     @ApiModelProperty("Количество сотрудников по критерию")
