@@ -35,11 +35,13 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    @Transactional
     public Position getByName(String name) {
         return positionRepository.getPositionByName(name);
     }
 
     @Override
+    @Transactional
     public Position getExisting(UUID id) {
         return positionRepository.getOne(id);
     }
