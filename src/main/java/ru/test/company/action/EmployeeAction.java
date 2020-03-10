@@ -1,6 +1,5 @@
 package ru.test.company.action;
 
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;

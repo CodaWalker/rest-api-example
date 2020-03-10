@@ -21,7 +21,6 @@ create table employee (
     first_working_date date,
     last_name varchar(255),
     last_working_date date,
-    presence_at_work boolean,
     department_id varchar(36),
     position_id varchar(36),
     primary key (id)

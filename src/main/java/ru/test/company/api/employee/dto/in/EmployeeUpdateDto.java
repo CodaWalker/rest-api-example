@@ -38,6 +38,4 @@ public class EmployeeUpdateDto {
     @ApiModelProperty("Название должности")
     private String position_name;
 
-    @ApiModelProperty("Присутствие сотрудника")
-    private Boolean presenceAtWork;
 }

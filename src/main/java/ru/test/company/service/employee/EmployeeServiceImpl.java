@@ -60,7 +60,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .lastWorkingDate(argument.getLastWorkingDate())
                 .department(argument.getDepartment())
                 .position(argument.getPosition())
-                .presenceAtWork(argument.getPresenceAtWork())
                 .build();
         employee.setID(uuid);
         return employeeRepository.save(employee);
@@ -85,13 +84,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(employeeFromDB.getLastWorkingDate() != null){
             System.out.println("Этот сотрудник уволен ранее");
         }else {
-            Employee employee = toCollectEmployee(id, false);
+            Employee employee = toCollectEmployee(id);
             return employeeRepository.save(employee);
         }
             return employeeFromDB;
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee toCollectEmployee(UUID id,Boolean flag) throws ErrorCustom {
+    public Employee toCollectEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
         if(employeeFromDB == null){
             throw new ErrorCustom(3,"Не найден сотрудник");
@@ -103,32 +102,19 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .firstName(employeeFromDB.getFirstName())
                     .lastName(employeeFromDB.getLastName())
                     .firstWorkingDate(employeeFromDB.getFirstWorkingDate())
-                    .lastWorkingDate(employeeFromDB.getLastWorkingDate())
+                    .lastWorkingDate(LocalDateTime.now())
                     .department(employeeFromDB.getDepartment())
                     .position(employeeFromDB.getPosition())
-                    .presenceAtWork(flag)
                     .build();
             employee.setID(id);
             return employee;
         }
     }
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setPresenceAtWorkEmployee(UUID id) throws ErrorCustom {
-            Employee employee = toCollectEmployee(id,true);
-            return employeeRepository.save(employee);
-    }
-
-    @Override
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom {
-        Employee employee = toCollectEmployee(id,false);
-        return employeeRepository.save(employee);
-        }
 
     @Override
     @Transactional
     public Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId) {
-        return employeeRepository.countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(positionId, departmentId);
+        return employeeRepository.countAllByPositionIdAndDepartmentId(positionId, departmentId);
     }
 
     @Override

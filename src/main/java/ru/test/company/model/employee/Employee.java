@@ -54,14 +54,10 @@ public class Employee extends BaseEntity {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    /** Пристуствие на работе */
-    @Column(name = "PRESENCE_AT_WORK")
-    private Boolean presenceAtWork;
 
     /** Инфиализация */
     @PrePersist
     private void setInitialValues() {
-        presenceAtWork = true;
         firstWorkingDate = LocalDateTime.now();
     }
 }

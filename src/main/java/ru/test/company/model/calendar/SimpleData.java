@@ -23,13 +23,15 @@ public class SimpleData {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = simpleData.year+"-"+simpleData.month+"-"+simpleData.day;
-        LocalDate localDateTime = null;
+        LocalDate localDateTime = LocalDate.now();
         try {
             localDateTime = LocalDate.parse(date,dtf);
         }
         catch (DateTimeParseException e){
             e.getMessage();
+
             throw new ErrorCustom(4,"Не правильно введены значения даты! Формат: yyyy-MM-dd ");
+
         }
         return localDateTime;
     }

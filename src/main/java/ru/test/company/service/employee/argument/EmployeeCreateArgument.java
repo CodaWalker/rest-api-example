@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 public class EmployeeCreateArgument {
 
     private final String firstName;
@@ -23,9 +22,8 @@ public class EmployeeCreateArgument {
     private final LocalDateTime firstWorkingDate;
     private final Department department;
     private final Position position;
-    private final Boolean presenceAtWork;
 
-    public EmployeeCreateArgument(String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, Department department, Position position) {
+    public EmployeeCreateArgument(String firstName, String lastName, LocalDateTime firstWorkingDate, Department department, Position position) {
         this.position = position;
 
         Validator.validateObjectParam(firstName, EmployeeError.EMPLOYEE_FIRST_NAME_IS_MANDATORY);
@@ -36,7 +34,6 @@ public class EmployeeCreateArgument {
         this.lastName = lastName;
         this.firstWorkingDate = firstWorkingDate;
         this.department = department;
-        this.presenceAtWork = presenceAtWork;
     }
 
 

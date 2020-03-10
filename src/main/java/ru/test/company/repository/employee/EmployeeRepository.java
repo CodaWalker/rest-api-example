@@ -16,8 +16,8 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
-    @Query(nativeQuery = true, countQuery = "SELECT COUNT(*) FROM Employee WHERE position_id = ? AND department_id = ? AND presence_at_work = true")
-    Integer countAllByPositionIdAndDepartmentIdAndPresenceAtWorkIsTrue(UUID positionId,UUID departmentId);
+    @Query("SELECT count(e) FROM Employee e WHERE e.position.id = :pId AND  e.department.id = :dIp")
+    Integer countAllByPositionIdAndDepartmentId(@Param("pId") UUID positionId,@Param("dIp") UUID departmentId);
 
     @Query("SELECT count(e) FROM Employee e LEFT JOIN Calendar c ON e.id = c.employee.id WHERE e.department.id = :dIp AND c.event = :event AND c.startIntervalDate <= :start AND c.endIntervalDate >= :end")
     Long countAllByDepartmentIdIncludeInterval(@Param("dIp")UUID departmentId,@Param("event")Event event, @Param("start")LocalDate start, @Param("end")LocalDate end);

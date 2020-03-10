@@ -76,7 +76,7 @@ public class EmployeeInternalController{
         return employeeService.getCountDaysInCompany(id);
     }
 
-    @ApiOperation("Получить количество рабочих дней")
+    @ApiOperation("Получить количество рабочих дней с начала трудоустройства")
     @GetMapping("/report/get-work-days/{id}")
     public Long getWorkDays(@PathVariable UUID id) {
         return employeeService.getCountWorkDaysInCompany(id);
@@ -91,41 +91,30 @@ public class EmployeeInternalController{
 
     }
 
-    @ApiOperation("Отметим посещение")
-    @PutMapping("/set-presence-at-work/{id}")
-    public EmployeeDto setPresence(@PathVariable UUID id) throws ErrorCustom {
-        return employeeMapper.toDto(employeeService.setPresenceAtWorkEmployee(id));
-    }
 
-    @ApiOperation("Отметим прогул")
-    @PutMapping("/set-absented-at-work/{id}")
-    public EmployeeDto setAbsented(@PathVariable UUID id) throws ErrorCustom {
-        return employeeMapper.toDto(employeeService.setAbsentedAtWorkEmployee(id));
-    }
-
-    @ApiOperation("Получить количество сотрудников, которые работают в отделе")
-    @GetMapping("/report/get-working-employees/{id}")
-    public Long getReportCountWorkingEmployees(@PathVariable UUID id) {
-        return employeeService.getReportAllWorkingThisDay(id);
-    }
-
-    @ApiOperation("Получить количество сотрудников, которые в отпуске сегодня")
-    @GetMapping("/report/get-holiday-employees/{id}")
-    public Long getReportCountHolidayEmployees(@PathVariable UUID id) {
-        return employeeService.getReportAllHolidayThisDay(id);
-    }
-
-    @ApiOperation("Получить количество сотрудников, которые на больничном сегодня")
-    @GetMapping("/report/get-medical-employees/{id}")
-    public Long getReportCountMedicalEmployees(@PathVariable UUID id) {
-        return employeeService.getReportAllMedicalThisDay(id);
-    }
-
-    @ApiOperation("Получить количество сотрудников, которые прогуливают сегодня")
-    @GetMapping("/report/get-absented-other-employees/{id}")
-    public Long getReportCountAbsentedOtherEmployees(@PathVariable UUID id) {
-        return employeeService.getReportAllAbsentedOtherThisDay(id);
-    }
+//    @ApiOperation("Получить количество сотрудников, которые работают в отделе")
+//    @GetMapping("/report/get-working-employees/{id}")
+//    public Long getReportCountWorkingEmployees(@PathVariable UUID id) {
+//        return employeeService.getReportAllWorkingThisDay(id);
+//    }
+//
+//    @ApiOperation("Получить количество сотрудников, которые в отпуске сегодня")
+//    @GetMapping("/report/get-holiday-employees/{id}")
+//    public Long getReportCountHolidayEmployees(@PathVariable UUID id) {
+//        return employeeService.getReportAllHolidayThisDay(id);
+//    }
+//
+//    @ApiOperation("Получить количество сотрудников, которые на больничном сегодня")
+//    @GetMapping("/report/get-medical-employees/{id}")
+//    public Long getReportCountMedicalEmployees(@PathVariable UUID id) {
+//        return employeeService.getReportAllMedicalThisDay(id);
+//    }
+//
+//    @ApiOperation("Получить количество сотрудников, которые прогуливают сегодня")
+//    @GetMapping("/report/get-absented-other-employees/{id}")
+//    public Long getReportCountAbsentedOtherEmployees(@PathVariable UUID id) {
+//        return employeeService.getReportAllAbsentedOtherThisDay(id);
+//    }
 
     @ApiOperation("Получить общий отчет по пристутствию сотрудников в отделе на сегодня")
     @GetMapping("/report/get-count-all-employees/{id}")

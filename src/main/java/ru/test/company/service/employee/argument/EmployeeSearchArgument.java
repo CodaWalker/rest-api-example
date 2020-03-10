@@ -22,7 +22,6 @@ public class EmployeeSearchArgument {
     private final LocalDateTime firstWorkingDate;
     private final Department department;
     private final Position position;
-    private final Boolean presenceAtWork;
 
 
 }

@@ -72,17 +72,11 @@ public class CalendarAction {
 
     public Calendar execute(UUID id, CalendarUpdateDto dto) throws ErrorCustom {
         UUID employeeId = dto.getEmployeeId();
-        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
-            employeeService.setPresenceAtWorkEmployee(employeeId);
-        }else {
-            employeeService.setAbsentedAtWorkEmployee(employeeId);
-        }
         Employee employee = employeeService.getExisting(employeeId);
         return getCalendar(id, dto.getEvent(), employee, dto.getStartIntervalDate(), dto.getEndIntervalDate());
 
     }
     private Calendar getCalendar(UUID id, Event event, Employee employee, LocalDate start, LocalDate end) throws ErrorCustom {
-        atWorkEmployee(event, employee, start, end);
         CalendarUpdateArgument argument = CalendarUpdateArgument.builder()
                 .event(event)
                 .startIntervalDate(start)
@@ -93,7 +87,6 @@ public class CalendarAction {
     }
 
     private Calendar getCalendar(Event event, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        atWorkEmployee(event, employee, startIntervalDate, finishIntervalDate);
         CalendarCreateArgument argument = CalendarCreateArgument.builder()
                 .event(event)
                 .startIntervalDate(startIntervalDate)
@@ -103,23 +96,9 @@ public class CalendarAction {
         return calendarService.createCalendar(argument);
     }
 
-    private void atWorkEmployee(Event event, Employee employee, LocalDate startIntervalDate, LocalDate finishIntervalDate) throws ErrorCustom {
-        if(startIntervalDate.isBefore(LocalDate.now()) && finishIntervalDate.isAfter(LocalDate.now()))
-        {
-            if(event != Event.PRESENCE_AT_WORK) {
-                employeeService.setAbsentedAtWorkEmployee(employee.getId());
-            }else {
-                employeeService.setPresenceAtWorkEmployee(employee.getId());
-            }
-        }
-    }
+
 
     private Employee getEmployee(CalendarCreateDto dto) throws ErrorCustom {
-        if(dto.getEvent().equals(Event.PRESENCE_AT_WORK)) {
-            employeeService.setPresenceAtWorkEmployee(dto.getEmployeeId());
-        }else {
-            employeeService.setAbsentedAtWorkEmployee(dto.getEmployeeId());
-        }
         return employeeService.getExisting(dto.getEmployeeId());
     }
 }

@@ -48,8 +48,4 @@ public class EmployeeDto {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ApiModelProperty("ИД должности сотрудника")
     private UUID position_id;
-
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ApiModelProperty("Присутствие сотрудника")
-    private Boolean presenceAtWork;
 }

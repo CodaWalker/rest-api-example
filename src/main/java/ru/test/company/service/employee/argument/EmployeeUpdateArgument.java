@@ -10,7 +10,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 /** Аргумент обновления сотрудника */
 public class EmployeeUpdateArgument {
 
@@ -21,9 +20,8 @@ public class EmployeeUpdateArgument {
     private final LocalDateTime firstWorkingDate;
     private final Department department;
     private final Position position;
-    private final Boolean presenceAtWork;
 
-    public EmployeeUpdateArgument(UUID uuid, String firstName, Boolean presenceAtWork, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Department department, Position position) {
+    public EmployeeUpdateArgument(UUID uuid, String firstName, String lastName, LocalDateTime firstWorkingDate, LocalDateTime lastWorkingDate, Department department, Position position) {
 
 
 //        Validator.validateObjectParam(userId, TicketError.TICKET_USER_ID_IS_MANDATORY);
@@ -35,7 +33,6 @@ public class EmployeeUpdateArgument {
         this.firstWorkingDate = firstWorkingDate;
         this.lastWorkingDate = lastWorkingDate;
         this.department = department;
-        this.presenceAtWork = presenceAtWork;
         this.position = position;
     }
 

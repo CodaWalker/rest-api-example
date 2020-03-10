@@ -24,8 +24,6 @@ public interface EmployeeService {
     Long getCountDaysInCompany(UUID uuid);
 
     Long getCountWorkDaysInCompany(UUID uuid);
-    Employee setPresenceAtWorkEmployee(UUID id) throws ErrorCustom;
-    Employee setAbsentedAtWorkEmployee(UUID id) throws ErrorCustom;
 
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
 

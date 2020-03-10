@@ -8,11 +8,13 @@ import ru.test.company.action.CalendarAction;
 import ru.test.company.api.calendar.dto.in.CalendarCreateDto;
 import ru.test.company.api.calendar.dto.out.CalendarDto;
 import ru.test.company.api.calendar.mapper.CalendarMapper;
+import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.calendar.SimpleData;
 import ru.test.company.model.employee.Event;
 import ru.test.company.service.calendar.CalendarService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,16 +42,10 @@ public class CalendarInternalController {
         return calendarMapper.toDtoListFromDB(calendarService.getAll());
     }
 
-    @ApiOperation("Получить список записей календаря")
+    @ApiOperation("Получить список записей календаря сотрудника")
     @GetMapping(value = "/get/{id}")
     public List<CalendarDto> getOne(@PathVariable UUID id) {
         return calendarMapper.toDtoListFromDB(calendarService.getAllByEmployeeId(id));
-    }
-
-    @ApiOperation("Получить количество рабочих дней сотрудника")
-    @GetMapping(value = "/report/get-all-count-working-day/{id}")
-    public Long countWorkingDay(@PathVariable UUID id) {
-        return null;
     }
 
 
@@ -65,5 +61,51 @@ public class CalendarInternalController {
     public SimpleData getLatestHoliday(@PathVariable UUID id) throws ErrorCustom {
         return SimpleData.convertLocalDateTimeToSimpleData(
                 calendarService.getCalendarByLastDateAndEvent(id, Event.ABSENTED_HOLIDAY));
+    }
+
+    @ApiOperation("Отметим посещение на сегодня")
+    @PutMapping("/set-presence-at-work/{id}")
+    public CalendarDto setPresence(@PathVariable UUID id) throws ErrorCustom {
+        CalendarCreateDto dto = CalendarCreateDto.builder()
+                .employeeId(id)
+                .startIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                .endIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                .event(Event.PRESENCE_AT_WORK)
+                .build();
+        return calendarMapper.toDto(calendarAction.execute(dto));
+    }
+
+        @ApiOperation("Отметим прогул на сегодня")
+        @PutMapping("/set-absented-at-work/{id}")
+        public CalendarDto setAbsented(@PathVariable UUID id) throws ErrorCustom {
+            CalendarCreateDto dto = CalendarCreateDto.builder()
+                    .employeeId(id)
+                    .startIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .endIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .event(Event.ABSENTED_OTHER)
+                    .build();
+        return calendarMapper.toDto(calendarAction.execute(dto));
+    }
+        @ApiOperation("Отметим отпуск на сегодня")
+        @PutMapping("/set-absented-holiday-at-work/{id}")
+        public CalendarDto setAbsentedHoliday(@PathVariable UUID id) throws ErrorCustom {
+            CalendarCreateDto dto = CalendarCreateDto.builder()
+                    .employeeId(id)
+                    .startIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .endIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .event(Event.ABSENTED_OTHER)
+                    .build();
+            return calendarMapper.toDto(calendarAction.execute(dto));
+        }
+        @ApiOperation("Отметим больничный на сегодня")
+        @PutMapping("/set-absented-medical-at-work/{id}")
+        public CalendarDto setAbsentedMedical(@PathVariable UUID id) throws ErrorCustom {
+            CalendarCreateDto dto = CalendarCreateDto.builder()
+                    .employeeId(id)
+                    .startIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .endIntervalDate(SimpleData.convertLocalDateTimeToSimpleData(LocalDate.now()))
+                    .event(Event.ABSENTED_OTHER)
+                    .build();
+            return calendarMapper.toDto(calendarAction.execute(dto));
     }
 }
