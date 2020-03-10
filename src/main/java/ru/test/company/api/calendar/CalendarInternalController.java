@@ -49,21 +49,21 @@ public class CalendarInternalController {
 
 
     @ApiOperation("Создать календарь")
-    @PutMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(CREATED)
     public CalendarDto create(@RequestBody CalendarCreateDto dto) throws ErrorCustom {
         return calendarMapper.toDto(calendarAction.execute(dto));
     }
 
     @ApiOperation("Получить дату последнего отпуска")
-    @GetMapping("/report/get-latest-holiday/{id}")
+    @PostMapping("/report/get-latest-holiday/{id}")
     public SimpleData getLatestHoliday(@PathVariable UUID id) throws ErrorCustom {
         return SimpleData.convertLocalDateTimeToSimpleData(
                 calendarService.getCalendarByLastDateAndEvent(id, Event.ABSENTED_HOLIDAY));
     }
 
     @ApiOperation("Отметим посещение на сегодня")
-    @PutMapping("/set-presence-at-work/{id}")
+    @PostMapping("/set-presence-at-work/{id}")
     public CalendarDto setPresence(@PathVariable UUID id) throws ErrorCustom {
         CalendarCreateDto dto = CalendarCreateDto.builder()
                 .employeeId(id)
@@ -75,7 +75,7 @@ public class CalendarInternalController {
     }
 
         @ApiOperation("Отметим прогул на сегодня")
-        @PutMapping("/set-absented-at-work/{id}")
+        @PostMapping("/set-absented-at-work/{id}")
         public CalendarDto setAbsented(@PathVariable UUID id) throws ErrorCustom {
             CalendarCreateDto dto = CalendarCreateDto.builder()
                     .employeeId(id)
@@ -86,7 +86,7 @@ public class CalendarInternalController {
         return calendarMapper.toDto(calendarAction.execute(dto));
     }
         @ApiOperation("Отметим отпуск на сегодня")
-        @PutMapping("/set-absented-holiday-at-work/{id}")
+        @PostMapping("/set-absented-holiday-at-work/{id}")
         public CalendarDto setAbsentedHoliday(@PathVariable UUID id) throws ErrorCustom {
             CalendarCreateDto dto = CalendarCreateDto.builder()
                     .employeeId(id)
@@ -97,7 +97,7 @@ public class CalendarInternalController {
             return calendarMapper.toDto(calendarAction.execute(dto));
         }
         @ApiOperation("Отметим больничный на сегодня")
-        @PutMapping("/set-absented-medical-at-work/{id}")
+        @PostMapping("/set-absented-medical-at-work/{id}")
         public CalendarDto setAbsentedMedical(@PathVariable UUID id) throws ErrorCustom {
             CalendarCreateDto dto = CalendarCreateDto.builder()
                     .employeeId(id)

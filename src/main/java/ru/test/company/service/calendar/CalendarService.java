@@ -14,6 +14,7 @@ public interface CalendarService {
     Calendar createCalendar(CalendarCreateArgument argument) throws ErrorCustom;
     Calendar updateCalendar(UUID calendarId, CalendarUpdateArgument calendarUpdateArgument);
     void removeCalendar(UUID calendarId);
+    void removeCalendarsByEmployeeId(UUID employeeId);
     Calendar getExisting(UUID calendarId);
     List<Calendar> getAll();
     Calendar getAllByEmployeeIdOrderByFinishIntervalDateAndEvent(UUID id,LocalDate end,Event event);

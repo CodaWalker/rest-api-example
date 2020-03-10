@@ -167,17 +167,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Employee deleteEmployee(UUID id) throws ErrorCustom {
-        Employee employeeFromDB = getExisting(id);
-        if(employeeFromDB == null){
-            throw new ErrorCustom(3,"Не найден сотрудник");
-        }
-        if(employeeFromDB.getLastWorkingDate() == null){
-            throw new ErrorCustom(2,"Этот сотрудник не уволен, необходимо предварительно его уволить");
-        }else {
-            employeeRepository.delete(employeeFromDB);
-        }
-        return employeeFromDB;
+    public void deleteEmployee(Employee employee) throws ErrorCustom {
+            employeeRepository.delete(employee);
     }
 
     @Override

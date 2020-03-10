@@ -56,6 +56,12 @@ public class CalendarServiceImpl implements CalendarService{
 
     @Override
     @Transactional
+    public void removeCalendarsByEmployeeId(UUID employeeId) {
+         calendarRepository.deleteAllByEmployeeId(employeeId);
+    }
+
+    @Override
+    @Transactional
     public Calendar getExisting(UUID calendarId) {
         return calendarRepository.getOne(calendarId);
     }

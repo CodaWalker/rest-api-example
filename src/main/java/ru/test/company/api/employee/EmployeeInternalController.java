@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.test.company.action.CalendarAction;
 import ru.test.company.action.EmployeeAction;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
@@ -28,12 +29,14 @@ public class EmployeeInternalController{
 
     private final EmployeeService employeeService;
     private final EmployeeAction employeeAction;
+    private final CalendarAction calendarAction;
     private final EmployeeMapper employeeMapper;
 
     @Autowired
-    public EmployeeInternalController(EmployeeService employeeService, DepartmentService departmentService, EmployeeAction employeeAction, EmployeeMapper employeeMapper) {
+    public EmployeeInternalController(EmployeeService employeeService, DepartmentService departmentService, EmployeeAction employeeAction, CalendarAction calendarAction, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
         this.employeeAction = employeeAction;
+        this.calendarAction = calendarAction;
         this.employeeMapper = employeeMapper;
     }
 
@@ -59,7 +62,7 @@ public class EmployeeInternalController{
     @ApiOperation("Удалить сотрудника")
     @PutMapping("/delete/{id}")
     public EmployeeDto delete(@PathVariable UUID id) throws ErrorCustom {
-        return employeeMapper.toDto(employeeService.deleteEmployee(id));
+         return employeeMapper.toDto(employeeAction.deleteEmployee(id));
     }
 
     @ApiOperation("Получить сотрудника по идентификатору")

@@ -49,6 +49,8 @@ public class ApiExceptionHandler  {
                 return new ErrorDTO(400, "У сотрудника нет событий");
             case 7:
                 return new ErrorDTO(400, "В данном отделе нет больше сотрудников одной должности");
+            case 8:
+                return new ErrorDTO(400, "Не получилось удалить все календарные записи");
             default:
                 return new ErrorDTO(400, "Неизвестная ошибка");
         }

@@ -18,6 +18,8 @@ public interface CalendarRepository extends JpaRepository<Calendar, UUID> {
 
     List<Calendar> getCalendarsByEmployee_IdAndEvent(UUID employee_id, Event event);
 
+    Long deleteAllByEmployeeId(UUID id);
+
     @Query("SELECT c FROM Calendar c WHERE c.employee.id = :eId AND c.event = :event and c.endIntervalDate = :end")
     Calendar getCalendarByEmployeeIdAndEventAndEndIntervalDate(@Param("eId") UUID employee_id,@Param("event")  Event event,@Param("end")  LocalDate endIntervalDate);
 

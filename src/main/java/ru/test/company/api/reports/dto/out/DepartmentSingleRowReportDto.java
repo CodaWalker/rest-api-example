@@ -24,7 +24,7 @@ public class DepartmentSingleRowReportDto {
     @ApiModelProperty("Событие")
     private Event event;
 
-    @ApiModelProperty("Количество сотрудников по критерию")
+    @ApiModelProperty("Количество сотрудников по событию")
     private Long countDaysEmployee;
 
 }

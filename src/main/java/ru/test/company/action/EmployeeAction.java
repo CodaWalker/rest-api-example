@@ -8,6 +8,7 @@ import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.position.Position;
+import ru.test.company.service.calendar.CalendarService;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.employee.EmployeeService;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
@@ -23,12 +24,14 @@ public class EmployeeAction {
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
     private final PositionService positionService;
+    private final CalendarService calendarService;
 
     @Autowired
-    public EmployeeAction(EmployeeService employeeService, DepartmentService departmentService, PositionService positionService) {
+    public EmployeeAction(EmployeeService employeeService, DepartmentService departmentService, PositionService positionService, CalendarService calendarService) {
         this.employeeService = employeeService;
         this.departmentService = departmentService;
         this.positionService = positionService;
+        this.calendarService = calendarService;
     }
 
     public Employee execute(EmployeeCreateDto dto) throws ErrorCustom {
@@ -73,4 +76,17 @@ public class EmployeeAction {
         return departmentService.getByName(name);
     }
 
+    public Employee deleteEmployee(UUID id) throws ErrorCustom {
+        Employee employeeFromDB = employeeService.getExisting(id);
+        if (employeeFromDB == null) {
+            throw new ErrorCustom(3, "Не найден сотрудник");
+        }
+        if (employeeFromDB.getLastWorkingDate() == null) {
+            throw new ErrorCustom(2, "Этот сотрудник не уволен, необходимо предварительно его уволить");
+        } else {
+            calendarService.removeCalendarsByEmployeeId(id);
+            employeeService.deleteEmployee(employeeFromDB);
+        }
+        return employeeFromDB;
+    }
 }

@@ -17,7 +17,7 @@ public interface EmployeeService {
     void removeEmployee(UUID employeeId);
     List<Employee> getAll();
     Employee dismissEmployee(UUID uuid) throws ErrorCustom;
-    Employee deleteEmployee(UUID uuid) throws ErrorCustom;
+    void deleteEmployee(Employee employee) throws ErrorCustom;
     Long getCountDaysInCompany(UUID uuid);
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
     Long getReportAllHolidayThisDay(UUID id);
