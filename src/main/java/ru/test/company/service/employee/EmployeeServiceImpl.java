@@ -79,12 +79,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee dismissEmployee(UUID id) throws ErrorCustom {
         Employee employeeFromDB = getExisting(id);
         if(employeeFromDB.getLastWorkingDate() != null){
-            System.out.println("Этот сотрудник уволен ранее");
+            throw new ErrorCustom(1,"Этот сотрудник уволен ранее");
         }else {
             Employee employee = toCollectEmployee(id);
             return employeeRepository.save(employee);
         }
-            return employeeFromDB;
     }
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public Employee toCollectEmployee(UUID id) throws ErrorCustom {

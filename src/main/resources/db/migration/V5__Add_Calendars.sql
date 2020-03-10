@@ -1,4 +1,3 @@
-
 insert into calendar (employee_id, last_interval_date, event, first_interval_date, id)
 values ('415440a1-80d4-4050-a838-0bae446e98f9', now(), 'PRESENCE_AT_WORK', now(), 'acaa524e-aa36-42e2-8570-48a753f08733');
 insert into calendar (employee_id, last_interval_date, event, first_interval_date, id)
