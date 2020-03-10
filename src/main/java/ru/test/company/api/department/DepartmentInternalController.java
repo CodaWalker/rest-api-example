@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.test.company.api.department.dto.in.DepartmentCreateDto;
 import ru.test.company.api.department.dto.out.DepartmentDto;
 import ru.test.company.api.department.mapper.DepartmentMapper;
+import ru.test.company.api.reports.dto.out.DepartmentSingleRowReportDto;
 import ru.test.company.model.department.Department;
 import ru.test.company.service.department.DepartmentService;
 import ru.test.company.service.department.argument.DepartmentCreateArgument;
@@ -50,8 +51,12 @@ public class DepartmentInternalController {
 
     @ApiOperation("Получить количество всех дней с началы открытия отдела")
     @GetMapping("/report/get-all-days/{id}")
-    public Long getAllDays(@PathVariable UUID id) {
-        return departmentService.getCountDaysInCompany(id);
+    public DepartmentSingleRowReportDto getAllDays(@PathVariable UUID id) {
+
+        return   DepartmentSingleRowReportDto.builder()
+                .countDaysEmployee(departmentService.getCountDaysInCompany(id))
+                .event(null)
+                .build();
     }
 
 }

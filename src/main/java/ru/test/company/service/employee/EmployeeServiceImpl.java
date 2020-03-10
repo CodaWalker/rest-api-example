@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.test.company.api.employee.dto.out.DepartmentReportDto;
+import ru.test.company.api.reports.dto.out.DepartmentReportDto;
 import ru.test.company.error.ErrorCustom;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.model.employee.Event;
@@ -191,9 +191,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         return localDateTime2.until(localDateTime, ChronoUnit.DAYS);
     }
 
-    @Override
-    public Long getCountWorkDaysInCompany(UUID uuid) {
-        return null;
-    }
 
 }

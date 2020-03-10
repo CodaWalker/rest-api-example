@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.test.company.action.EmployeeAction;
 import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
 import ru.test.company.api.employee.dto.in.EmployeeUpdateDto;
-import ru.test.company.api.employee.dto.out.DepartmentReportDto;
+import ru.test.company.api.reports.dto.out.DepartmentReportDto;
+import ru.test.company.api.reports.dto.out.DepartmentSingleRowReportDto;
 import ru.test.company.api.employee.dto.out.EmployeeDto;
 import ru.test.company.api.employee.mapper.EmployeeMapper;
 import ru.test.company.error.ErrorCustom;
@@ -67,16 +68,15 @@ public class EmployeeInternalController{
         return employeeMapper.toDto(employeeService.getExisting(id));
     }
 
-    @ApiOperation("Получить количество всех дней")
-    @GetMapping("/report/get-all-days/{id}")
-    public Long getAllDays(@PathVariable UUID id) {
-        return employeeService.getCountDaysInCompany(id);
-    }
 
     @ApiOperation("Получить количество рабочих дней с начала трудоустройства")
     @GetMapping("/report/get-work-days/{id}")
-    public Long getWorkDays(@PathVariable UUID id) {
-        return employeeService.getCountWorkDaysInCompany(id);
+    public DepartmentSingleRowReportDto getWorkDays(@PathVariable UUID id) {
+
+        return   DepartmentSingleRowReportDto.builder()
+                .countDaysEmployee(employeeService.getCountDaysInCompany(id))
+                .event(null)
+                .build();
     }
 
 

@@ -1,16 +1,12 @@
 package ru.test.company.service.employee;
 
-import ru.test.company.api.employee.dto.in.EmployeeCreateDto;
-import ru.test.company.api.employee.dto.out.DepartmentReportDto;
+import ru.test.company.api.reports.dto.out.DepartmentReportDto;
 import ru.test.company.error.ErrorCustom;
-import ru.test.company.model.department.Department;
 import ru.test.company.model.employee.Employee;
 import ru.test.company.service.employee.argument.EmployeeCreateArgument;
 import ru.test.company.service.employee.argument.EmployeeUpdateArgument;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public interface EmployeeService {
@@ -23,7 +19,6 @@ public interface EmployeeService {
     Employee dismissEmployee(UUID uuid) throws ErrorCustom;
     Employee deleteEmployee(UUID uuid) throws ErrorCustom;
     Long getCountDaysInCompany(UUID uuid);
-    Long getCountWorkDaysInCompany(UUID uuid);
     Integer getByEmployeesByEmployeeIdAndPositionId(UUID positionId, UUID departmentId);
     Long getReportAllHolidayThisDay(UUID id);
     Long getReportAllMedicalThisDay(UUID id);
