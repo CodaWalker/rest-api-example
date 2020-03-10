@@ -34,25 +34,22 @@ public class ApiExceptionHandler  {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = {ErrorCustom.class})
     public ErrorDTO parameterBindCustomException(ErrorCustom e) {
-        if(e.getCode() == 1) {
-            return new ErrorDTO(400, "Этот сотрудник уволен ранее");
-        }else
-        if(e.getCode() == 2) {
-            return new ErrorDTO(400, "Этот сотрудник не уволен, необходимо предварительно его уволить");
-        }else
-        if(e.getCode() == 3) {
-            return new ErrorDTO(400, "Не найден сотрудник");
-        }else
-        if(e.getCode() == 4) {
-            return new ErrorDTO(400, "Не правильно введены значения даты! Формат: yyyy-MM-dd ");
-        }else
-        if(e.getCode() == 5) {
-            return new ErrorDTO(400, "Неизвестная ошибка");
-        }else
-        if(e.getCode() == 6) {
-            return new ErrorDTO(400, "У сотрудника нет событий");
-        }else
-            return new ErrorDTO(400, "Неизвестная ошибка");
+        switch (e.getCode()) {
+            case 1:
+                return new ErrorDTO(400, "Этот сотрудник уволен ранее");
+            case 2:
+                return new ErrorDTO(400, "Этот сотрудник не уволен, необходимо предварительно его уволить");
+            case 3:
+                return new ErrorDTO(400, "Не найден сотрудник");
+            case 4:
+                return new ErrorDTO(400, "Не правильно введены значения даты! Формат: yyyy-MM-dd ");
+            case 5:
+                return new ErrorDTO(400, "Неизвестная ошибка ");
+            case 6:
+                return new ErrorDTO(400, "У сотрудника нет событий");
+            default:
+                return new ErrorDTO(400, "Неизвестная ошибка");
+        }
     }
 
     @ResponseBody
